@@ -26,6 +26,15 @@ pip-log.txt
 .tox
 nosetests.xml
 
+# Build artifacts
+target
+
+# Virtualenv
+venv
+
+# application logs
+livestatus.log
+
 # Translations
 *.mo
 

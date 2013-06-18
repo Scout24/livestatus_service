@@ -14,6 +14,7 @@ default_task = ["analyze", "publish"]
 
 name = "livestatus-service"
 version = "0.0.1"
+description = "Exposes MK's livestatus to the outside world over HTTP"
 authors = (Author("Marcel Wolf", "marcel.wolf@immobilienscout24.de"),
            Author("Maximilien Riehl", "maximilien.riehl@gmail.com"))
 url = "https://github.com/mriehl/livestatus-service"
@@ -29,9 +30,9 @@ def initialize(project):
     project.set_property('copy_resources_target', '$dir_dist')
     project.get_property('copy_resources_glob').append('setup.cfg')
     project.get_property("filter_resources_glob").append("**/livestatus_service/__init__.py")
-    
-    project.install_file('/data/is24/livestatus_service/', 'livestatus_service/livestatus_service.wsgi')
 
+    project.install_file('/data/is24/livestatus_service/', 'livestatus_service/livestatus_service.wsgi')
+    project.include_file("livestatus_service", "templates/*.html")
     project.set_property("coverage_threshold_warn", 85)
     project.set_property("coverage_break_build", False)
 

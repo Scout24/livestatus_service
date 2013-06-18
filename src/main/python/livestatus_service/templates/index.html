@@ -1,0 +1,60 @@
+{% extends "template.html" %}
+
+{% block title %}Index{% endblock %}
+{% block head %}
+{{ super() }}
+<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/css/bootstrap-combined.min.css" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="span8 hero-unit">
+      <h1>Livestatus service</h1>
+
+      <p>
+       The livestatus-service exposes the functionality of a livestatus socket to the outside world over HTTP.
+      </p>
+      <ul>
+        <li>
+        <h2>Performing queries</h2>
+        <p>
+          <code>GET /query?q=<em>QUERY</em></code>
+        </p>
+        <p>
+          Will perform a query using <em>QUERY</em>. An easy example would be
+          <code>/query?q=GET%20hosts</code>
+        </p>
+        <p>
+          If you need newlines, e.G. to add a filter, use <code>\n</code>.
+        </p>
+        </li>
+        <li>
+        <h2>Performing commands</h2>
+        <p>
+          <code>GET /cmd?q=<em>COMMAND</em></code>
+        </p>
+        <p>
+          Will perform a command using <em>COMMAND</em>. The <code>COMMAND [%s]</code> directive will be inserted for you.
+          An easy example would be <code>/cmd?q=DISABLE_HOST_SVC_CHECKS;devytc</code>
+        </p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+<hr>
+<div class="container">
+  <div class="offset1 span5">
+    {{ super() }}
+  </div>
+</div>
+
+<script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
+{% endblock %}
+
+

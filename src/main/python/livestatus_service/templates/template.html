@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+  {% block head %}
+  <title>{% block title %}{% endblock %} - pypiproxy</title>
+  {% endblock %}
+</head>
+<body>
+
+{% block content %}{% endblock %}
+
+<footer>
+  {% block footer %}
+  Livestatus service,  version {{ version }} <br>
+  &copy; Copyright 2013 Marcel Wolf, Maximilien Riehl
+  {% endblock %}
+</footer>
+</body>
+</html>
