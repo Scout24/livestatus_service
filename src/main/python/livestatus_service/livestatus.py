@@ -1,6 +1,8 @@
 import socket
 import time
 from livestatus_service.configuration import get_current_configuration
+
+
 BUFFER_SIZE = 8192
 
 

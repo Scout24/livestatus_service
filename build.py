@@ -3,6 +3,7 @@ from pybuilder.core import init, use_plugin, Author
 use_plugin("filter_resources")
 
 use_plugin("python.core")
+use_plugin("python.unittest")
 use_plugin("python.coverage")
 use_plugin("python.pydev")
 use_plugin("python.distutils")
@@ -24,7 +25,7 @@ license = "WTFPL"
 
 @init
 def initialize(project):
-    project.build_depends_on("mock")
+    project.build_depends_on("mockito")
 
     project.depends_on("flask")
 
