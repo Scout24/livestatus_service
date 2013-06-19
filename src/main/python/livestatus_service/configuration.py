@@ -1,8 +1,14 @@
 import ConfigParser
 
+
+def get_current_configuration():
+    configuration = Configuration('/etc/livestatus.cfg')
+    return configuration
+
+
 class Configuration(object):
     DEFAULT_LOG_FILE = "/var/log/livestatus-service.log"
-    DEFAULT_LIVESTATUS_SOCKET= "/var/lib/nagios/rw/live"
+    DEFAULT_LIVESTATUS_SOCKET = "/var/lib/nagios/rw/live"
 
     OPTION_LOG_FILE = "log_file"
     OPTION_LIVESTATUS_SOCKET = "livestatus_socket"

@@ -3,12 +3,11 @@ __version__ = "${version}"
 import logging
 
 from .configuration import Configuration
-from .livestatus import configure_livestatus
+
 
 def initialize(config_file):
     current_configuration = Configuration(config_file)
     initialize_logging(current_configuration.log_file)
-    configure_livestatus(current_configuration)
 
 
 def initialize_logging(log_file):

@@ -8,9 +8,11 @@ LOGGER = logging.getLogger("livestatus.webapp")
 
 application = Flask(__name__)
 
+
 def render_application_template(template_name, **template_parameters):
     template_parameters["version"] = livestatus_version
     return render_template(template_name, **template_parameters)
+
 
 @application.route("/")
 def handle_index():
@@ -20,13 +22,14 @@ def handle_index():
 @application.route('/query', methods=['GET'])
 def handle_query():
     query_command = request.args.get('q')
-    query_command =  query_command.replace('\\n', '\n')
+    query_command = query_command.replace('\\n', '\n')
     query_result = perform_query(query_command)
-    return ("{0}\n".format(query_result), 200)
+    return "{0}\n".format(query_result), 200
+
 
 @application.route('/cmd', methods=['GET'])
 def handle_command():
     command = request.args.get('q')
-    command =  command.replace('\\n', '\n')
+    command = command.replace('\\n', '\n')
     command_result = perform_command(command)
-    return ("{0}\n".format(command_result), 200)
+    return "{0}\n".format(command_result), 200

@@ -5,5 +5,4 @@ from livestatus_service import initialize
 
 initialize("./livestatus.cfg")
 application.debug=True
-import socket
-application.run(host=socket.getfqdn(), port=1337)
+application.run(host='localhost', port=1337)

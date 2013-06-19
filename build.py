@@ -7,6 +7,7 @@ use_plugin("python.coverage")
 use_plugin("python.pydev")
 use_plugin("python.distutils")
 use_plugin('copy_resources')
+use_plugin('python.flake8')
 
 use_plugin("python.install_dependencies")
 
@@ -35,6 +36,7 @@ def initialize(project):
     project.include_file("livestatus_service", "templates/*.html")
     project.set_property("coverage_threshold_warn", 85)
     project.set_property("coverage_break_build", False)
+
 
 @init(environments='teamcity')
 def set_properties_for_teamcity_builds(project):
