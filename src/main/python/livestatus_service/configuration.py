@@ -7,13 +7,13 @@ def get_current_configuration():
 
 
 class Configuration(object):
-    DEFAULT_LOG_FILE = "/var/log/livestatus-service.log"
-    DEFAULT_LIVESTATUS_SOCKET = "/var/lib/nagios/rw/live"
+    DEFAULT_LOG_FILE = '/var/log/livestatus-service.log'
+    DEFAULT_LIVESTATUS_SOCKET = '/var/lib/nagios/rw/live'
 
-    OPTION_LOG_FILE = "log_file"
-    OPTION_LIVESTATUS_SOCKET = "livestatus_socket"
+    OPTION_LOG_FILE = 'log_file'
+    OPTION_LIVESTATUS_SOCKET = 'livestatus_socket'
 
-    SECTION = "livestatus-service"
+    SECTION = 'livestatus-service'
 
     def __init__(self, config_file_name):
         self._config_parser = ConfigParser.RawConfigParser()
@@ -32,7 +32,7 @@ class Configuration(object):
         if not self._config_parser.has_option(Configuration.SECTION, option):
             if default_value:
                 return default_value
-            raise ValueError("Missing configuration option '%s' in section '%s'", option, Configuration.SECTION)
+            raise ValueError("Missing configuration option '%s' in section '%s", option, Configuration.SECTION)
         return self._config_parser.get(Configuration.SECTION, option)
 
     def _load_config_file(self, config_file_name):
@@ -40,7 +40,7 @@ class Configuration(object):
             if self._config_parser.read(config_file_name) != [config_file_name]:
                 raise ValueError("Failed to load config file '{0}'".format(config_file_name))
         except ConfigParser.Error as e:
-            raise ValueError("Error loading config file: {0}".format(e))
+            raise ValueError('Error loading config file: {0}'.format(e))
 
     def _verify_config(self):
         if not self._config_parser.has_section(Configuration.SECTION):
