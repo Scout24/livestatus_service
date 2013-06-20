@@ -8,42 +8,43 @@
 
 {% block content %}
 <div class="container">
-  <div class="row">
-    <div class="span8 hero-unit">
-      <h1>Livestatus service</h1>
+  <div class="hero-unit">
+    <h1>Livestatus-service</h1>
+    <p class="lead">
+      Livestatus-service exposes the functionality of a livestatus socket to the outside world over HTTP.
+    </p>
+  </div>
+  <div class="row-fluid marketing">
 
-      <p>
-       The livestatus-service exposes the functionality of a livestatus socket to the outside world over HTTP.
-      </p>
-      <ul>
-        <li>
+    <div class="span6">
         <h2>Performing queries</h2>
         <p>
           <code>GET /query?q=<em>QUERY</em></code>
         </p>
         <p>
-          Will perform a query using <em>QUERY</em>. An easy example would be
-          <a href="/query?q=GET%20hosts"><code>/query?q=GET%20hosts</code></a>
+          Will perform a query using <em>QUERY</em>.<br />
+          An easy example would be <a href="/query?q=GET%20hosts"><code>/query?q=GET%20hosts</code></a>
         </p>
         <p>
           If you need newlines, e.G. to add a filter, use <code>\n</code>.
         </p>
-        </li>
-        <li>
+    </div>
+
+    <div class="span6">
         <h2>Performing commands</h2>
         <p>
           <code>GET /cmd?q=<em>COMMAND</em></code>
         </p>
         <p>
-          Will perform a command using <em>COMMAND</em>. The <code>COMMAND [%s]</code> directive will be inserted for you.
+          Will perform a command using <em>COMMAND</em>.<br />
+          The <code>COMMAND [%s]</code> directive will be inserted for you.<br />
           An easy example would be <a href="/cmd?q=DISABLE_HOST_SVC_CHECKS;devytc"> <code>/cmd?q=DISABLE_HOST_SVC_CHECKS;devytc</code></a>
         </p>
         <p>
           Refer to the <a href="http://docs.icinga.org/latest/en/extcommands2.html"> list of external commands</a> for more information.
         </p>
-        </li>
-      </ul>
     </div>
+
   </div>
 </div>
 
