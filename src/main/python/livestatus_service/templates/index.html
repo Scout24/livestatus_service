@@ -26,7 +26,8 @@
           An easy example would be <a href="/query?q=GET%20hosts"><code>/query?q=GET%20hosts</code></a>
         </p>
         <p>
-          If you need newlines, e.G. to add a filter, use <code>\n</code>.
+          If you need newlines, e.G. to add a filter, use <code>\n</code>.<br />
+          <a href="/query?q=GET%20hosts\nColumns:%20host_name%20notifications_enabled\nFilter:%20host_name%20=%20devica01">Complex query example.</a>
         </p>
     </div>
 
@@ -38,7 +39,7 @@
         <p>
           Will perform a command using <em>COMMAND</em>.<br />
           The <code>COMMAND [%s]</code> directive will be inserted for you.<br />
-          An easy example would be <a href="/cmd?q=DISABLE_HOST_SVC_CHECKS;devytc"> <code>/cmd?q=DISABLE_HOST_SVC_CHECKS;devytc</code></a>
+          An easy example would be <a href="/cmd?q=ENABLE_HOST_NOTIFICATIONS;devica01"> <code>/cmd?q=ENABLE_HOST_NOTIFICATIONS;devica01</code></a>
         </p>
         <p>
           Refer to the <a href="http://docs.icinga.org/latest/en/extcommands2.html"> list of external commands</a> for more information.
