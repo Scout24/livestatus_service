@@ -12,7 +12,7 @@ An added benefit is that queries always return up-to-date information as opposed
 livestatus over the network is not possible out-of-the-box.
 Using SSH is just awkward and exposing the socket through TCP is probably a huge security flaw.
 
-Livestatus-service solves this problem by exposing the full functionality of the socket over a simple HTTP API.
+Livestatus-service solves this problem by exposing the full functionality of the socket through a simple HTTP API.
 Due to using httpd and flask, you can build in authentication easily - put basicAuth in flask directly or the httpd 
 access configuration of your choice.
 
