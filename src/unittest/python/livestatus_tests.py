@@ -22,13 +22,25 @@ class LivestatusTests(unittest.TestCase):
 
         verify(mock_socket).send('test\n')
 
-    def test_should_perform_command_and_receive_ok(self):
+    def test_should_open_configuration_socket(self):
         mock_configuration = mock()
         mock_socket = mock()
         mock_configuration.livestatus_socket = '/path/to/socket'
         when(livestatus_service.livestatus).get_current_configuration().thenReturn(mock_configuration)
         when(livestatus_service.livestatus.socket).socket(any_value(), any_value()).thenReturn(mock_socket)
 
-        perform_command(any_value())
+        perform_query('test')
 
-        verify(mock_socket).send(any_value())
+        verify(mock_socket).connect('/path/to/socket')
+
+    def test_should_perform_command_and_receive_ok(self):
+        mock_configuration = mock()
+        mock_socket = mock()
+        mock_configuration.livestatus_socket = '/path/to/socket'
+        when(livestatus_service.livestatus.time).time().thenReturn(123)
+        when(livestatus_service.livestatus).get_current_configuration().thenReturn(mock_configuration)
+        when(livestatus_service.livestatus.socket).socket(any_value(), any_value()).thenReturn(mock_socket)
+
+        perform_command('foobar')
+
+        verify(mock_socket).send('COMMAND [123] foobar\n')
