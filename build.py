@@ -25,15 +25,23 @@ license = "WTFPL"
 
 @init
 def initialize(project):
+    project.port_to_run_on = "8080"
+
+
     project.build_depends_on("mockito")
 
     project.depends_on("flask")
 
+
     project.set_property('copy_resources_target', '$dir_dist')
     project.get_property('copy_resources_glob').append('setup.cfg')
     project.get_property("filter_resources_glob").append("**/livestatus_service/__init__.py")
+    project.get_property("filter_resources_glob").append("**/livestatus_service/livestatus_service.conf")
 
-    project.install_file('/data/is24/livestatus_service/', 'livestatus_service/livestatus_service.wsgi')
+
+    project.install_file('/var/www', 'livestatus_service/livestatus_service.wsgi')
+    project.install_file('/etc/httpd/conf.d/', 'livestatus_service/livestatus_service.wsgi')
+
     project.include_file("livestatus_service", "templates/*.html")
     project.set_property("coverage_threshold_warn", 85)
     project.set_property("coverage_break_build", False)
