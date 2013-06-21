@@ -3,7 +3,7 @@ __author__ = 'Marcel Wolf <marcel.wolf@immobilienscout24.de>, Maximilien Riehl <
 import unittest
 from mockito import mock, when, verify, unstub, any as any_value
 import livestatus_service
-from livestatus_service.livestatus import perform_query, perform_command, format_answer
+from livestatus_service.livestatus import perform_query, perform_command, format_answer, _dictionary_of_rows
 
 
 class LivestatusTests(unittest.TestCase):
@@ -93,6 +93,13 @@ Columns: host_name notifications_enabled''', 'devica01;1 tuvdbs05;1 tuvdbs06;1',
     def test_should_parse_columns_from_answer_when_no_columns_were_specified(self):
         answer = format_answer('GET hosts', 'host_name;notifications_enabled\ndevica01;1 tuvdbs05;1 tuvdbs06;1', None)
         self.assertEqual(answer, [{'notifications_enabled': '1', 'host_name': 'devica01'}, {'notifications_enabled': '1', 'host_name': 'tuvdbs05'}, {'notifications_enabled': '1', 'host_name': 'tuvdbs06'}])
+
+
+    def test_should_raise_exception_when_key_given_and_missing_from_one_row(self):
+        self.assertRaises(ValueError, _dictionary_of_rows,
+                        'foo1;bar1;baz1\nfoo2;bar2',
+                        ['foo_column', 'bar_column', 'baz_column'],
+                        'baz_column') #  group by baz_column but second entry has only foo_column (foo2) and bar_column (bar2)
 
     def test_should_parse_query_with_several_columns(self):
         answer = format_answer('GET hosts\nColumns: host_name notifications_enabled accept_passive_checks acknowledged acknowledgement_type action_url',
