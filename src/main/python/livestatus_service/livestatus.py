@@ -10,8 +10,7 @@ class NoColumnsSpecifiedException(BaseException):
     pass
 
 
-def perform_query(query):
-    key_to_use = None
+def perform_query(query, key=None):
     socket_path = get_current_configuration().livestatus_socket
 
     livestatus_socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
@@ -27,10 +26,10 @@ def perform_query(query):
         total_data.append(data)
     answer = ''.join(total_data)
 
-    return format_answer(query, answer, key_to_use)
+    return format_answer(query, answer, key)
 
 
-def perform_command(command):
+def perform_command(command, key=None):
     socket_path = get_current_configuration().livestatus_socket
 
     livestatus_socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)

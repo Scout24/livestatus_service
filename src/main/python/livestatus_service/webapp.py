@@ -30,8 +30,8 @@ def handle_command():
     return validate_and_dispatch(request, perform_command)
 
 
-def dispatch_request(query, dispatch_function):
-    result = dispatch_function(query)
+def dispatch_request(query, dispatch_function, **kwargs):
+    result = dispatch_function(query, **kwargs)
     return '{0}\n'.format(result), 200
 
 
@@ -46,6 +46,7 @@ def validate_and_dispatch(request, dispatch_function):
     try:
         query = request.args.get('q')
         query = validate_query(query)
-        return dispatch_request(query, dispatch_function)
+        key = request.args.get('key')
+        return dispatch_request(query, dispatch_function, key=key)
     except BaseException, exception:
         return 'Error : %s' % exception, 500
