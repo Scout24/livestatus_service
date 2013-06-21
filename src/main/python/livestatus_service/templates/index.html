@@ -39,12 +39,12 @@
         <p>
           By default you will receive a list of dictionaries, where each dictionary represent a row.
           <a href="/query?q=GET%20hosts\nColumns:%20host_name%20notifications_enabled">Example : host_name and notifications_enabled</a>
-          The example yields <code>[{u'notifications_enabled': '1', u'host_name': 'devica01'}, {u'notifications_enabled': '1', u'host_name': 'tuvdbs05'}, {u'notifications_enabled': '1', u'host_name': 'tuvdbs06'}, {u'notifications_enabled': '1', u'host_name': 'tuvdbs50'}, {u'notifications_enabled': '1', u'host_name': 'tuvmpc01'}, {u'notifications_enabled': '1', u'host_name': 'tuvmpc02'}, {u'notifications_enabled': '1', u'host_name': 'tuvrep01'}]</code>
+          The example yields <code>[ { "notifications_enabled": "0", "host_name": "devica01" }, { "notifications_enabled": "1", "host_name": "tuvdbs05" }, { "notifications_enabled": "1", "host_name": "tuvdbs06" }, { "notifications_enabled": "1", "host_name": "tuvdbs50" }, { "notifications_enabled": "1", "host_name": "tuvmpc01" }, { "notifications_enabled": "1", "host_name": "tuvmpc02" }, { "notifications_enabled": "1", "host_name": "tuvrep01" } ]</code>
         </p>
         <p>
         If you specify the <code>key</code> parameter, this column name will be used as a unique index for the rows and you will have a dictionary of dictionaries instead.
         <a href="/query?q=GET%20hosts\nColumns:%20host_name%20notifications_enabled&key=host_name">Example : host_name and notifications_enabled with host_name as key</a>
-        The example yields <code>{'devica01': {u'notifications_enabled': '1', u'host_name': 'devica01'}, 'tuvrep01': {u'notifications_enabled': '1', u'host_name': 'tuvrep01'}, 'tuvdbs06': {u'notifications_enabled': '1', u'host_name': 'tuvdbs06'}, 'tuvdbs05': {u'notifications_enabled': '1', u'host_name': 'tuvdbs05'}, 'tuvdbs50': {u'notifications_enabled': '1', u'host_name': 'tuvdbs50'}, 'tuvmpc01': {u'notifications_enabled': '1', u'host_name': 'tuvmpc01'}, 'tuvmpc02': {u'notifications_enabled': '1', u'host_name': 'tuvmpc02'}}</code>
+        The example yields <code>{ "devica01": { "notifications_enabled": "0", "host_name": "devica01" }, "tuvrep01": { "notifications_enabled": "1", "host_name": "tuvrep01" }, "tuvdbs06": { "notifications_enabled": "1", "host_name": "tuvdbs06" }, "tuvdbs05": { "notifications_enabled": "1", "host_name": "tuvdbs05" }, "tuvdbs50": { "notifications_enabled": "1", "host_name": "tuvdbs50" }, "tuvmpc01": { "notifications_enabled": "1", "host_name": "tuvmpc01" }, "tuvmpc02": { "notifications_enabled": "1", "host_name": "tuvmpc02" } }</code>
         </p>
     </div>
 
