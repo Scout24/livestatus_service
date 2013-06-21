@@ -1,4 +1,4 @@
-__author__ = 'mwolf'
+__author__ = 'Marcel Wolf <marcel.wolf@immobilienscout24.de>, Maximilien Riehl <maximilien.riehl@gmail.com>'
 
 import unittest
 from mockito import mock, when, verify, unstub, any as any_value
@@ -222,3 +222,12 @@ Columns: host_name notifications_enabled''', 'devica01;1 tuvdbs05;1 tuvdbs06;1',
                                         'host_name': 'tuvmpc02'
                                     }
                                 })
+
+
+    def test_should_parse_query_with_several_columns_for_one_host_grouped_by_one_key(self):
+        answer = format_answer('GET hosts\nFilter:%20host_name%20=%20devica01',
+                               'host_name;notifications_enabled;accept_passive_checks;acknowledged;acknowledgement_type;action_url\ndevica01;1;1;0;0; tuvdbs05;1;1;0;0; tuvdbs06;1;1;0;0; tuvdbs50;1;1;0;0; tuvmpc01;1;1;0;0; tuvmpc02;1;1;0;0; tuvrep01;1;1;0;0;',
+                               'host_name')
+        #TODO actual value
+
+        self.assertEqual(answer, {})

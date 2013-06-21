@@ -72,7 +72,6 @@ def determine_columns_to_show_from_answer(answer):
 
 def _list_of_rows(answer, columns_to_show):
     formatted_answer = []
-    print answer
     for row in answer.split():
         formatted_row = dict(zip(columns_to_show, row.split(';')))
         formatted_answer.append(formatted_row)
