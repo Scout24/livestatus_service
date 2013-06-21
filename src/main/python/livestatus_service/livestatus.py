@@ -1,6 +1,7 @@
 import socket
 import time
 import logging
+import json
 from livestatus_service.configuration import get_current_configuration
 
 
@@ -30,7 +31,9 @@ def perform_query(query, key=None):
         total_data.append(data)
     answer = ''.join(total_data)
 
-    return format_answer(query, answer, key)
+    formatted_answer = format_answer(query, answer, key)
+
+    return json.dumps(formatted_answer, sort_keys=False, indent=4)
 
 
 def perform_command(command, key=None):
