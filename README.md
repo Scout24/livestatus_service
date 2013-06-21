@@ -4,7 +4,7 @@ livestatus-service
 ## Background
 Icinga is a pretty cool monitoring solution (especially when compared to a monolithic dinosaur like nagios)
 but unfortunately it lacks any means of remote-control which is a sine qua non requirement for deployment automation.
-The most obvious use case is scheduling downtimes programatically.
+The most obvious use case is scheduling downtimes programmatically.
 
 MK-Livestatus is a Nagios/Icinga extension that allows queries and commands by accessing a UNIX socket on the machine.
 An added benefit is that queries always return up-to-date information as opposed to the ominous global state file 
