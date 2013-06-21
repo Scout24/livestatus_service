@@ -47,7 +47,7 @@ def format_answer(query, answer, key_to_use):
         columns_to_show = determine_columns_to_show_from_answer(answer)
         if len(answer.splitlines()) <= 1:
             raise ValueError('Cannot format answer {0}, either the column definitions or the contents are missing'.format(answer))
-        answer = '\n'.join(answer.splitlines()[1:]) # first line is the list of columns, so must be removed
+        answer = '\n'.join(answer.splitlines()[1:])  # first line is the list of columns, so must be removed
 
     if key_to_use is not None and not key_to_use in columns_to_show:
         raise RuntimeError('Cannot use %s as key since it is not a column in the result' % key_to_use)
@@ -65,10 +65,12 @@ def determine_columns_to_show_from_query(query):
             return columns_to_show
     raise NoColumnsSpecifiedException()
 
+
 def determine_columns_to_show_from_answer(answer):
     columns_line = answer.splitlines()[0]
     columns_to_show = columns_line.split(';')
     return columns_to_show
+
 
 def _list_of_rows(answer, columns_to_show):
     formatted_answer = []

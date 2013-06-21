@@ -224,10 +224,79 @@ Columns: host_name notifications_enabled''', 'devica01;1 tuvdbs05;1 tuvdbs06;1',
                                 })
 
 
-    def test_should_parse_query_with_several_columns_for_one_host_grouped_by_one_key(self):
-        answer = format_answer('GET hosts\nFilter:%20host_name%20=%20devica01',
-                               'host_name;notifications_enabled;accept_passive_checks;acknowledged;acknowledgement_type;action_url\ndevica01;1;1;0;0; tuvdbs05;1;1;0;0; tuvdbs06;1;1;0;0; tuvdbs50;1;1;0;0; tuvmpc01;1;1;0;0; tuvmpc02;1;1;0;0; tuvrep01;1;1;0;0;',
-                               'host_name')
-        #TODO actual value
+    def test_should_parse_mk_example_together_with_one_key(self):
+        mk_example_lines = ["acknowledged;action_url;address;alias;check_command;check_period;checks_enabled;contacts;in_check_period;in_notification_period;is_flapping;last_check;last_state_change;name;notes;notes_url;notification_period;scheduled_downtime_depth;state;total_services", "0;/nagios/pnp/index.php?host=$HOSTNAME$;127.0.0.1;Acht;check-mk-ping;;1;check_mk,hh;1;1;0;1256194120;1255301430;Acht;;;24X7;0;0;7", "0;/nagios/pnp/index.php?host=$HOSTNAME$;127.0.0.1;DREI;check-mk-ping;;1;check_mk,hh;1;1;0;1256194120;1255301431;DREI;;;24X7;0;0;1", "0;/nagios/pnp/index.php?host=$HOSTNAME$;127.0.0.1;Drei;check-mk-ping;;1;check_mk,hh;1;1;0;1256194120;1255301435;Drei;;;24X7;0;0;4"]
 
-        self.assertEqual(answer, {})
+        answer = format_answer('GET hosts',
+                                '\n'.join(mk_example_lines),
+                               'alias')
+        self.assertEqual(answer, {
+                                    'Acht': {
+                                        'check_period': '',
+                                        'state': '0',
+                                        'checks_enabled': '1',
+                                        'name': 'Acht',
+                                        'contacts': 'check_mk,hh',
+                                        'notification_period': '24X7',
+                                        'last_state_change': '1255301430',
+                                        'notes': '',
+                                        'check_command': 'check-mk-ping',
+                                        'acknowledged': '0',
+                                        'in_notification_period': '1',
+                                        'last_check': '1256194120',
+                                        'alias': 'Acht',
+                                        'action_url': '/nagios/pnp/index.php?host=$HOSTNAME$',
+                                        'in_check_period': '1',
+                                        'notes_url': '',
+                                        'address': '127.0.0.1',
+                                        'is_flapping': '0',
+                                        'scheduled_downtime_depth': '0',
+                                        'total_services': '7'
+                                    },
+                                    'DREI': {
+                                        'check_period': '',
+                                        'state': '0',
+                                        'checks_enabled': '1',
+                                        'name': 'DREI',
+                                        'contacts': 'check_mk,hh',
+                                        'notification_period': '24X7',
+                                        'last_state_change': '1255301431',
+                                        'notes': '',
+                                        'check_command':
+                                        'check-mk-ping',
+                                        'acknowledged': '0',
+                                        'in_notification_period': '1',
+                                        'last_check': '1256194120',
+                                        'alias': 'DREI',
+                                        'action_url': '/nagios/pnp/index.php?host=$HOSTNAME$',
+                                        'in_check_period': '1',
+                                        'notes_url': '',
+                                        'address': '127.0.0.1',
+                                        'is_flapping': '0',
+                                        'scheduled_downtime_depth': '0',
+                                        'total_services': '1'
+                                    },
+                                    'Drei': {
+                                        'check_period': '',
+                                        'state': '0',
+                                        'checks_enabled': '1',
+                                        'name': 'Drei',
+                                        'contacts': 'check_mk,hh',
+                                        'notification_period': '24X7',
+                                        'last_state_change': '1255301435',
+                                        'notes': '',
+                                        'check_command': 'check-mk-ping',
+                                        'acknowledged': '0',
+                                        'in_notification_period': '1',
+                                        'last_check': '1256194120',
+                                        'alias': 'Drei',
+                                        'action_url': '/nagios/pnp/index.php?host=$HOSTNAME$',
+                                        'in_check_period': '1',
+                                        'notes_url': '',
+                                        'address': '127.0.0.1',
+                                        'is_flapping': '0',
+                                        'scheduled_downtime_depth': '0',
+                                        'total_services': '4'
+                                    }
+                                })
+
