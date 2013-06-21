@@ -43,9 +43,7 @@ def perform_command(command, key=None):
 def format_answer(query, answer, key_to_use):
     try:
         columns_to_show = determine_columns_to_show_from_query(query)
-        print "using query"
     except NoColumnsSpecifiedException:
-        print "using answer"
         columns_to_show = determine_columns_to_show_from_answer(answer)
         answer = '\n'.join(answer.splitlines()[1:]) # first line is the list of columns, so must be removed
 

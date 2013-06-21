@@ -156,5 +156,69 @@ Columns: host_name notifications_enabled''', 'devica01;1 tuvdbs05;1 tuvdbs06;1',
                                         'accept_passive_checks': '1',
                                         'host_name': 'tuvmpc02'
                                     }
-                                }
-)
+                                })
+
+
+    def test_should_parse_query_with_several_columns_when_no_columns_are_specified(self):
+        answer = format_answer('GET hosts',
+                               'host_name;notifications_enabled;accept_passive_checks;acknowledged;acknowledgement_type;action_url\ndevica01;1;1;0;0; tuvdbs05;1;1;0;0; tuvdbs06;1;1;0;0; tuvdbs50;1;1;0;0; tuvmpc01;1;1;0;0; tuvmpc02;1;1;0;0; tuvrep01;1;1;0;0;',
+                               'host_name')
+
+        self.assertEqual(answer, {
+                                    'devica01': {
+                                        'acknowledgement_type': '0',
+                                        'notifications_enabled': '1',
+                                        'acknowledged': '0',
+                                        'action_url': '',
+                                        'accept_passive_checks': '1',
+                                        'host_name': 'devica01'
+                                    },
+                                    'tuvrep01': {
+                                        'acknowledgement_type': '0',
+                                        'notifications_enabled': '1',
+                                        'acknowledged': '0',
+                                        'action_url': '',
+                                        'accept_passive_checks': '1',
+                                        'host_name': 'tuvrep01'
+                                    },
+                                    'tuvdbs06': {
+                                        'acknowledgement_type': '0',
+                                        'notifications_enabled': '1',
+                                        'acknowledged': '0',
+                                        'action_url': '',
+                                        'accept_passive_checks': '1',
+                                        'host_name': 'tuvdbs06'
+                                    },
+                                    'tuvdbs05': {
+                                        'acknowledgement_type': '0',
+                                        'notifications_enabled': '1',
+                                        'acknowledged': '0',
+                                        'action_url': '',
+                                        'accept_passive_checks': '1',
+                                        'host_name': 'tuvdbs05'
+                                    },
+                                    'tuvdbs50': {
+                                        'acknowledgement_type': '0',
+                                        'notifications_enabled': '1',
+                                        'acknowledged': '0',
+                                        'action_url': '',
+                                        'accept_passive_checks': '1',
+                                        'host_name': 'tuvdbs50'
+                                    },
+                                    'tuvmpc01': {
+                                        'acknowledgement_type': '0',
+                                        'notifications_enabled': '1',
+                                        'acknowledged': '0',
+                                        'action_url': '',
+                                        'accept_passive_checks': '1',
+                                        'host_name': 'tuvmpc01'
+                                    },
+                                    'tuvmpc02': {
+                                        'acknowledgement_type': '0',
+                                        'notifications_enabled': '1',
+                                        'acknowledged': '0',
+                                        'action_url': '',
+                                        'accept_passive_checks': '1',
+                                        'host_name': 'tuvmpc02'
+                                    }
+                                })
