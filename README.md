@@ -3,10 +3,10 @@ livestatus-service
 
 ## Background
 Icinga is a pretty cool monitoring solution (especially when compared to a monolithic dinosaur like nagios)
-but unfortunately it lacks any means of remote-control which is a sine-qua-none requirement for deployment automation.
+but unfortunately it lacks any means of remote-control which is a sine qua non requirement for deployment automation.
 The most obvious use case is scheduling downtimes programatically.
 
-MK-Livestatus is a Nagios/Icinga extension that allows queries and commands by accessing an UNIX socket on the machine.
+MK-Livestatus is a Nagios/Icinga extension that allows queries and commands by accessing a UNIX socket on the machine.
 An added benefit is that queries always return up-to-date information as opposed to the ominous global state file 
 (searching for "status.dat" should get you going on this). Unfortunately having a local socket also means that accessing
 livestatus over the network is not possible out-of-the-box.
@@ -17,7 +17,7 @@ Due to using httpd and flask, you can build in authentication easily - put basic
 access configuration of your choice.
 
 
-## 1-step checkout, test, build
+## one-step checkout, test, build
 ```bash
 sudo pip install pyb-init && pyb-init github mriehl : livestatus_service
 ```

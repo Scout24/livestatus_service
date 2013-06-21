@@ -48,4 +48,4 @@ def validate_and_dispatch(request, dispatch_function):
         query = validate_query(query)
         return dispatch_request(query, dispatch_function)
     except BaseException, exception:
-        return ('Error : %s' % exception, 500)
+        return 'Error : %s' % exception, 500
