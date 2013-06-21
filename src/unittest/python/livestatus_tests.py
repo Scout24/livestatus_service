@@ -95,11 +95,17 @@ Columns: host_name notifications_enabled''', 'devica01;1 tuvdbs05;1 tuvdbs06;1',
         self.assertEqual(answer, [{'notifications_enabled': '1', 'host_name': 'devica01'}, {'notifications_enabled': '1', 'host_name': 'tuvdbs05'}, {'notifications_enabled': '1', 'host_name': 'tuvdbs06'}])
 
 
-    def test_should_raise_exception_when_key_given_and_missing_from_one_row(self):
-        self.assertRaises(ValueError, _dictionary_of_rows,
+    def test_should_skip_row_when_key_is_missing_from_row(self):
+        result = _dictionary_of_rows(
                         'foo1;bar1;baz1\nfoo2;bar2',
                         ['foo_column', 'bar_column', 'baz_column'],
-                        'baz_column') #  group by baz_column but second entry has only foo_column (foo2) and bar_column (bar2)
+                        'baz_column')
+
+        self.assertEquals(result,  {'baz1': {
+                                        'baz_column': 'baz1',
+                                        'bar_column': 'bar1',
+                                        'foo_column': 'foo1'}
+                                    })
 
     def test_should_parse_query_with_several_columns(self):
         answer = format_answer('GET hosts\nColumns: host_name notifications_enabled accept_passive_checks acknowledged acknowledgement_type action_url',

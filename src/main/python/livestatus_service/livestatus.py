@@ -1,9 +1,13 @@
 import socket
 import time
+import logging
 from livestatus_service.configuration import get_current_configuration
 
 
 BUFFER_SIZE = 8192
+
+
+LOGGER = logging.getLogger('livestatus.livestatus')
 
 
 class NoColumnsSpecifiedException(BaseException):
@@ -86,7 +90,7 @@ def _dictionary_of_rows(answer, columns_to_show, key_to_use):
     for row in answer.split():
         formatted_row = dict(zip(columns_to_show, row.split(';')))
         if key_to_use not in formatted_row:
-            message = 'Cannot group by key "{0}" because it is not in row {1}.'
-            raise ValueError(message.format(key_to_use, formatted_row))
+            LOGGER.warn('Skipping row {0} because the key {1} is missing'.format(formatted_row, key_to_use))
+            continue
         formatted_answer[str(formatted_row[key_to_use])] = formatted_row
     return formatted_answer
