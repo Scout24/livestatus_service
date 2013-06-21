@@ -3,6 +3,7 @@ import logging
 from flask import Flask, request, render_template
 from livestatus import perform_query, perform_command
 from livestatus_service import __version__ as livestatus_version
+import traceback
 
 
 LOGGER = logging.getLogger('livestatus.webapp')
@@ -49,4 +50,5 @@ def validate_and_dispatch(request, dispatch_function):
         key = request.args.get('key')
         return dispatch_request(query, dispatch_function, key=key)
     except BaseException, exception:
+        LOGGER.error(traceback.format_exc())
         return 'Error : %s' % exception, 500
