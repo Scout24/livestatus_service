@@ -17,19 +17,21 @@ class LivestatusTests(unittest.TestCase):
         mock_configuration.livestatus_socket = '/path/to/socket'
         when(livestatus_service.livestatus).get_current_configuration().thenReturn(mock_configuration)
         when(livestatus_service.livestatus.socket).socket(any_value(), any_value()).thenReturn(mock_socket)
+        when(livestatus_service.livestatus).format_answer(any_value(), any_value(), any_value()).thenReturn(None)
 
         perform_query('test')
 
         verify(mock_socket).send('test\n')
 
-    def test_should_open_configuration_socket(self):
+    def test_should_open_configured_socket(self):
         mock_configuration = mock()
         mock_socket = mock()
         mock_configuration.livestatus_socket = '/path/to/socket'
         when(livestatus_service.livestatus).get_current_configuration().thenReturn(mock_configuration)
         when(livestatus_service.livestatus.socket).socket(any_value(), any_value()).thenReturn(mock_socket)
+        when(livestatus_service.livestatus).format_answer(any_value(), any_value(), any_value()).thenReturn(None)
 
-        perform_query('test')
+        livestatus_service.livestatus.perform_query('test')
 
         verify(mock_socket).connect('/path/to/socket')
 
@@ -88,9 +90,9 @@ Columns: host_name notifications_enabled''', 'devica01;1 tuvdbs05;1 tuvdbs06;1',
                                     }
                                 ])
 
-    def test_should_not_do_anything_when_no_columns_were_specified(self):
-        answer = format_answer('GET hosts', 'devica01;1 tuvdbs05;1 tuvdbs06;1', None)
-        self.assertEqual(answer, 'devica01;1 tuvdbs05;1 tuvdbs06;1')
+    def test_should_parse_columns_from_answer_when_no_columns_were_specified(self):
+        answer = format_answer('GET hosts', 'host_name;notifications_enabled\ndevica01;1 tuvdbs05;1 tuvdbs06;1', None)
+        self.assertEqual(answer, [{'notifications_enabled': '1', 'host_name': 'devica01'}, {'notifications_enabled': '1', 'host_name': 'tuvdbs05'}, {'notifications_enabled': '1', 'host_name': 'tuvdbs06'}])
 
     def test_should_parse_query_with_several_columns(self):
         answer = format_answer('GET hosts\nColumns: host_name notifications_enabled accept_passive_checks acknowledged acknowledgement_type action_url',

@@ -42,9 +42,12 @@ def perform_command(command, key=None):
 
 def format_answer(query, answer, key_to_use):
     try:
-        columns_to_show = determine_columns_to_show(query)
+        columns_to_show = determine_columns_to_show_from_query(query)
+        print "using query"
     except NoColumnsSpecifiedException:
-        return answer
+        print "using answer"
+        columns_to_show = determine_columns_to_show_from_answer(answer)
+        answer = '\n'.join(answer.splitlines()[1:]) # first line is the list of columns, so must be removed
 
     if key_to_use is not None and not key_to_use in columns_to_show:
         raise RuntimeError('Cannot use %s as key since it is not a column in the result' % key_to_use)
@@ -55,17 +58,21 @@ def format_answer(query, answer, key_to_use):
         return _dictionary_of_rows(answer, columns_to_show, key_to_use)
 
 
-def determine_columns_to_show(query):
+def determine_columns_to_show_from_query(query):
     for query_line in query.splitlines():
         if 'Columns:' in query_line:
             columns_to_show = query_line.split('Columns:')[1].split()
             return columns_to_show
     raise NoColumnsSpecifiedException()
 
+def determine_columns_to_show_from_answer(answer):
+    columns_line = answer.splitlines()[0]
+    columns_to_show = columns_line.split(';')
+    return columns_to_show
 
 def _list_of_rows(answer, columns_to_show):
     formatted_answer = []
-
+    print answer
     for row in answer.split():
         formatted_row = dict(zip(columns_to_show, row.split(';')))
         formatted_answer.append(formatted_row)
