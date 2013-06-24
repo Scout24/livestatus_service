@@ -17,7 +17,23 @@ class LivestatusTests(unittest.TestCase):
         unstub()
 
 
+    def test_should_read_query_answer_fully(self):
+        mock_configuration = mock()
+        mock_socket = mock()
+        mock_configuration.livestatus_socket = '/path/to/socket'
+        when(livestatus_service.livestatus).get_current_configuration().thenReturn(mock_configuration)
+        when(mock_socket).recv(any_value()).thenReturn('a').thenReturn('b').thenReturn(None)
+        when(livestatus_service.livestatus.socket).socket(any_value(), any_value()).thenReturn(mock_socket)
+        when(livestatus_service.livestatus).format_answer(any_value(), any_value(), any_value()).thenReturn(None)
+        livestatus_service.livestatus.format_answer = lambda _, x, __: x
+
+        self.assertEqual(perform_query('test'), '"ab"')
+
+
+
     def test_should_write_query_to_socket(self):
+        livestatus_service.livestatus.format_answer = lambda _, x, __: x
+
         mock_configuration = mock()
         mock_socket = mock()
         mock_configuration.livestatus_socket = '/path/to/socket'
@@ -25,7 +41,7 @@ class LivestatusTests(unittest.TestCase):
         when(livestatus_service.livestatus.socket).socket(any_value(), any_value()).thenReturn(mock_socket)
         when(livestatus_service.livestatus).format_answer(any_value(), any_value(), any_value()).thenReturn(None)
 
-        perform_query('test')
+        print perform_query('test')
 
         verify(mock_socket).send('test\n')
 
