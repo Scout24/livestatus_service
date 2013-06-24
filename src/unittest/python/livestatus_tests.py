@@ -30,7 +30,6 @@ class LivestatusTests(unittest.TestCase):
         self.assertEqual(perform_query('test'), '"ab"')
 
 
-
     def test_should_write_query_to_socket(self):
         livestatus_service.livestatus.format_answer = lambda _, x, __: x
 
