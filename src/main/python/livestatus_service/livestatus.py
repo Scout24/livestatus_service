@@ -52,12 +52,12 @@ def perform_command(command, key=None):
     return "OK"
 
 
-'''
-Answers come in two different types :
- - Columns were specified in the LQL, so the query must be parsed
- - Columns were not specified, they are then the first line in the result, so the answer must be parsed
-'''
 def format_answer(query, answer, key_to_use):
+    '''
+    Answers come in two different types :
+     - Columns were specified in the LQL, so the query must be parsed
+     - Columns were not specified, they are then the first line in the result, so the answer must be parsed
+    '''
     try:
         columns_to_show = determine_columns_to_show_from_query(query)
     except NoColumnsSpecifiedException:
