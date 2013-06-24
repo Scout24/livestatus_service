@@ -11,6 +11,7 @@ class LivestatusTests(unittest.TestCase):
     def tearDown(self):
         unstub()
 
+
     def test_should_write_query_to_socket(self):
         mock_configuration = mock()
         mock_socket = mock()

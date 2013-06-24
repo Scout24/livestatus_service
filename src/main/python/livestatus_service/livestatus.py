@@ -83,7 +83,7 @@ def determine_columns_to_show_from_answer(answer):
 def _list_of_rows(answer, columns_to_show):
     formatted_answer = []
     for row in answer.split():
-        formatted_row = dict(zip(columns_to_show, row.split(';')))
+        formatted_row = _map_columns_to_show_with_one_row_of_actual_values(columns_to_show, row)
         formatted_answer.append(formatted_row)
     return formatted_answer
 
@@ -91,9 +91,13 @@ def _list_of_rows(answer, columns_to_show):
 def _dictionary_of_rows(answer, columns_to_show, key_to_use):
     formatted_answer = {}
     for row in answer.split():
-        formatted_row = dict(zip(columns_to_show, row.split(';')))
+        formatted_row = _map_columns_to_show_with_one_row_of_actual_values(columns_to_show, row)
         if key_to_use not in formatted_row:
             LOGGER.warn('Skipping row {0} because the key {1} is missing'.format(formatted_row, key_to_use))
             continue
         formatted_answer[str(formatted_row[key_to_use])] = formatted_row
     return formatted_answer
+
+
+def _map_columns_to_show_with_one_row_of_actual_values(columns_to_show, row):
+    return dict(zip(columns_to_show, row.split(';')))
