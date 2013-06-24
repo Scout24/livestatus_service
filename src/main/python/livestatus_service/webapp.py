@@ -49,6 +49,6 @@ def validate_and_dispatch(request, dispatch_function):
         query = validate_query(query)
         key = request.args.get('key')
         return dispatch_request(query, dispatch_function, key=key)
-    except BaseException, exception:
+    except BaseException as exception:
         LOGGER.error(traceback.format_exc())
         return 'Error : %s' % exception, 500
