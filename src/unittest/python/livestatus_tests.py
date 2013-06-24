@@ -3,7 +3,12 @@ __author__ = 'Marcel Wolf <marcel.wolf@immobilienscout24.de>, Maximilien Riehl <
 import unittest
 from mockito import mock, when, verify, unstub, any as any_value
 import livestatus_service
-from livestatus_service.livestatus import perform_query, perform_command, format_answer, _dictionary_of_rows
+from livestatus_service.livestatus import   perform_query, \
+                                            perform_command, \
+                                            format_answer,\
+                                            _dictionary_of_rows,\
+                                            NoColumnsSpecifiedException,\
+                                            determine_columns_to_show_from_query
 
 
 class LivestatusTests(unittest.TestCase):
@@ -71,6 +76,15 @@ Columns: host_name notifications_enabled''', 'devica01;1 tuvdbs05;1 tuvdbs06;1',
 
     def test_should_raise_exception_when_key_is_not_in_queried_columns(self):
         self.assertRaises(RuntimeError, format_answer, 'GET hosts\nColumns: host_name notifications_enabled', 'devica01;1 tuvdbs05;1 tuvdbs06;1', 'not_a_valid_key')
+
+
+    def test_should_raise_exception_when_no_columns_were_specified_in_query(self):
+        self.assertRaises(NoColumnsSpecifiedException, determine_columns_to_show_from_query, 'foo;1 bar;2')
+
+
+    def test_should_raise_exception_when_answer_is_missing_values(self):
+        self.assertRaises(ValueError, format_answer, 'GET hosts', 'host_name;notifications_enabled', None)
+
 
     def test_should_return_list_when_no_key_is_given(self):
         answer = format_answer('GET hosts\nColumns: host_name notifications_enabled''',
