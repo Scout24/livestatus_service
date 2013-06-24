@@ -40,7 +40,7 @@ class LivestatusTests(unittest.TestCase):
         when(livestatus_service.livestatus.socket).socket(any_value(), any_value()).thenReturn(mock_socket)
         when(livestatus_service.livestatus).format_answer(any_value(), any_value(), any_value()).thenReturn(None)
 
-        print perform_query('test')
+        perform_query('test')
 
         verify(mock_socket).send('test\n')
 
