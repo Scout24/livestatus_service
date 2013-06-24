@@ -1,4 +1,8 @@
-import ConfigParser
+try:
+    import ConfigParser
+    configparser = ConfigParser
+except ImportError:
+    import configparser
 
 
 def get_current_configuration():
@@ -16,7 +20,7 @@ class Configuration(object):
     SECTION = 'livestatus-service'
 
     def __init__(self, config_file_name):
-        self._config_parser = ConfigParser.RawConfigParser()
+        self._config_parser = configparser.RawConfigParser()
         self._load_config_file(config_file_name)
         self._verify_config()
 
@@ -39,7 +43,7 @@ class Configuration(object):
         try:
             if self._config_parser.read(config_file_name) != [config_file_name]:
                 raise ValueError("Failed to load config file '{0}'".format(config_file_name))
-        except ConfigParser.Error as e:
+        except configparser.Error as e:
             raise ValueError('Error loading config file: {0}'.format(e))
 
     def _verify_config(self):
