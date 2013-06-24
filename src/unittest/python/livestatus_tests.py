@@ -70,6 +70,12 @@ class LivestatusTests(unittest.TestCase):
 
 class LivestatusAnswerParsingTests(unittest.TestCase):
 
+    def setUp(self):
+        when(livestatus_service.livestatus.LOGGER).warn(any_value()).thenReturn(None)
+
+    def tearDown(self):
+        unstub()
+
     def test_should_parse_query_with_two_columns(self):
         answer = format_answer('''
 GET hosts
