@@ -4,6 +4,11 @@ import logging
 import json
 from livestatus_service.configuration import get_current_configuration
 
+'''
+This file provides function wraps the livestatus UNIX socket to expose it to
+python code. It provides ways to abstract access to the socket and to process
+answers.
+'''
 
 BUFFER_SIZE = 8192
 
@@ -47,6 +52,11 @@ def perform_command(command, key=None):
     return "OK"
 
 
+'''
+Answers come in two different types :
+ - Columns were specified in the LQL, so the query must be parsed
+ - Columns were not specified, they are then the first line in the result, so the answer must be parsed
+'''
 def format_answer(query, answer, key_to_use):
     try:
         columns_to_show = determine_columns_to_show_from_query(query)
@@ -55,7 +65,7 @@ def format_answer(query, answer, key_to_use):
         if len(answer.splitlines()) <= 1:
             message = 'Cannot format answer {0}, either the column definitions or the contents are missing'
             raise ValueError(message.format(answer))
-        answer = '\n'.join(answer.splitlines()[1:])  # first line is the list of columns, so must be removed
+        answer = '\n'.join(answer.splitlines()[1:])  # first line is the list of columns, remove it
 
     if key_to_use is not None and not key_to_use in columns_to_show:
         raise RuntimeError('Cannot use %s as key since it is not a column in the result' % key_to_use)

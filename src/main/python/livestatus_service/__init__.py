@@ -1,4 +1,8 @@
 __version__ = "${version}"
+'''
+    Livestatus-service wraps a MK-livestatus UNIX socket as a Flask application.
+    This is the initialization code for the application.
+'''
 
 import logging
 
