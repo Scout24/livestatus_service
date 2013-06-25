@@ -1,7 +1,8 @@
+from __future__ import absolute_import
 import logging
 
 from flask import Flask, request, render_template
-from livestatus import perform_query, perform_command
+from livestatus_service.livestatus import perform_query, perform_command
 from livestatus_service import __version__ as livestatus_version
 import traceback
 

@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 __author__ = 'Marcel Wolf <marcel.wolf@immobilienscout24.de>, Maximilien Riehl <maximilien.riehl@gmail.com>'
 
 import unittest

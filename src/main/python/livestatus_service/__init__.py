@@ -1,3 +1,4 @@
+from __future__ import absolute_import
 __version__ = "${version}"
 '''
     Livestatus-service wraps a MK-livestatus UNIX socket as a Flask application.
