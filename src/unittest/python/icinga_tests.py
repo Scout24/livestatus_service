@@ -13,6 +13,7 @@ class IcingaTests(unittest.TestCase):
     def test_should_write_command_in_correct_syntax_to_named_pipe(self, mock_time, mock_open):
         mock_open.return_value = MagicMock(spec=file)
         mock_time.return_value = '123'
+
         perform_command('FOO;bar', '/path/to/commandfile.cmd', None)
 
         self.assertEqual(mock_open.call_args, call('/path/to/commandfile.cmd', 'w'))
