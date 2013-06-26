@@ -29,6 +29,8 @@ def initialize(project):
 
 
     project.build_depends_on("mockito")
+    project.build_depends_on("mock")
+
 
     project.depends_on("flask")
 
