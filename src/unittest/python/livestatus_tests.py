@@ -19,53 +19,41 @@ class LivestatusTests(unittest.TestCase):
 
 
     def test_should_read_query_answer_fully(self):
-        mock_configuration = mock()
         mock_socket = mock()
-        mock_configuration.livestatus_socket = '/path/to/socket'
-        when(livestatus_service.livestatus).get_current_configuration().thenReturn(mock_configuration)
         when(mock_socket).recv(any_value()).thenReturn('a').thenReturn('b').thenReturn(None)
         when(livestatus_service.livestatus.socket).socket(any_value(), any_value()).thenReturn(mock_socket)
         when(livestatus_service.livestatus).format_answer(any_value(), any_value(), any_value()).thenReturn(None)
         livestatus_service.livestatus.format_answer = lambda _, x, __: x
 
-        self.assertEqual(perform_query('test'), '"ab"')
+        self.assertEqual(perform_query('test', '/path/to/socket'), '"ab"')
 
 
     def test_should_write_query_to_socket(self):
         livestatus_service.livestatus.format_answer = lambda _, x, __: x
 
-        mock_configuration = mock()
         mock_socket = mock()
-        mock_configuration.livestatus_socket = '/path/to/socket'
-        when(livestatus_service.livestatus).get_current_configuration().thenReturn(mock_configuration)
         when(livestatus_service.livestatus.socket).socket(any_value(), any_value()).thenReturn(mock_socket)
         when(livestatus_service.livestatus).format_answer(any_value(), any_value(), any_value()).thenReturn(None)
 
-        perform_query('test')
+        perform_query('test', '/path/to/socket')
 
         verify(mock_socket).send('test\n')
 
     def test_should_open_configured_socket(self):
-        mock_configuration = mock()
         mock_socket = mock()
-        mock_configuration.livestatus_socket = '/path/to/socket'
-        when(livestatus_service.livestatus).get_current_configuration().thenReturn(mock_configuration)
         when(livestatus_service.livestatus.socket).socket(any_value(), any_value()).thenReturn(mock_socket)
         when(livestatus_service.livestatus).format_answer(any_value(), any_value(), any_value()).thenReturn(None)
 
-        livestatus_service.livestatus.perform_query('test')
+        livestatus_service.livestatus.perform_query('test', '/path/to/socket')
 
         verify(mock_socket).connect('/path/to/socket')
 
     def test_should_perform_command_and_receive_ok(self):
-        mock_configuration = mock()
         mock_socket = mock()
-        mock_configuration.livestatus_socket = '/path/to/socket'
         when(livestatus_service.livestatus.time).time().thenReturn(123)
-        when(livestatus_service.livestatus).get_current_configuration().thenReturn(mock_configuration)
         when(livestatus_service.livestatus.socket).socket(any_value(), any_value()).thenReturn(mock_socket)
 
-        perform_command('foobar')
+        perform_command('foobar', '/path/to/socket')
 
         verify(mock_socket).send('COMMAND [123] foobar\n')
 

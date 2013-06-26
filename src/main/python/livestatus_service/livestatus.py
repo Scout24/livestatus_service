@@ -4,7 +4,6 @@ import socket
 import time
 import logging
 import json
-from livestatus_service.configuration import get_current_configuration
 
 '''
 This file provides function wraps the livestatus UNIX socket to expose it to
@@ -22,9 +21,7 @@ class NoColumnsSpecifiedException(BaseException):
     pass
 
 
-def perform_query(query, key=None):
-    socket_path = get_current_configuration().livestatus_socket
-
+def perform_query(query, socket_path, key=None):
     livestatus_socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     livestatus_socket.connect(socket_path)
 
@@ -43,9 +40,7 @@ def perform_query(query, key=None):
     return json.dumps(formatted_answer, sort_keys=False, indent=4)
 
 
-def perform_command(command, key=None):
-    socket_path = get_current_configuration().livestatus_socket
-
+def perform_command(command, socket_path, key=None):
     livestatus_socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     livestatus_socket.connect(socket_path)
     timestamp = str(int(time.time()))
