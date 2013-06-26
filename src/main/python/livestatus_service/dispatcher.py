@@ -13,7 +13,7 @@ def perform_query(query, key=None, handler=None):
         socket_path = configuration.livestatus_socket
         return perform_livestatus_query(query, socket_path, key)
 
-    return ValueError('No handler {0}.'.format(handler))
+    raise ValueError('No handler {0}.'.format(handler))
 
 
 def perform_command(command, key=None, handler=None):
@@ -26,4 +26,4 @@ def perform_command(command, key=None, handler=None):
         command_file_path = configuration.icinga_command_file
         return perform_icinga_command(command, command_file_path, key)
 
-    return ValueError('No handler {0}.'.format(handler))
+    raise ValueError('No handler {0}.'.format(handler))

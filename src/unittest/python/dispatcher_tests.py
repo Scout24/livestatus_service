@@ -30,4 +30,6 @@ class DispatcherTests(unittest.TestCase):
         verify(livestatus_service.dispatcher).perform_icinga_command('FOO;bar', '/path/to/commandfile.cmd', None)
 
     def test_perform_command_should_raise_exception_when_handler_does_not_exist(self):
-        perform_command('FOO;bar', None, 'mylittlepony')
+        mock_config = mock()
+        when(livestatus_service.dispatcher).get_current_configuration().thenReturn(mock_config)
+        self.assertRaises(BaseException, perform_command, 'FOO;bar', None, 'mylittlepony')
