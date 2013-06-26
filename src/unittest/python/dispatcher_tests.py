@@ -28,3 +28,6 @@ class DispatcherTests(unittest.TestCase):
         perform_command('FOO;bar', None, 'icinga')
 
         verify(livestatus_service.dispatcher).perform_icinga_command('FOO;bar', '/path/to/commandfile.cmd', None)
+
+    def test_perform_command_should_raise_exception_when_handler_does_not_exist(self):
+        perform_command('FOO;bar', None, 'mylittlepony')
