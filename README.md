@@ -21,6 +21,7 @@ access configuration of your choice.
  * Livestatus access with no need for passwordless SSH or exposure of TCP sockets
  * Nice, customizable query result formatting
  * Built-in documentation
+ * Built-in access to the icinga command pipe
  * Tested codebase
 
 
