@@ -3,6 +3,12 @@ from __future__ import absolute_import
 import unittest
 from mock import patch, MagicMock, call
 
+try:
+    import io
+    file = io.IOBase
+except:
+    pass
+
 from livestatus_service.icinga import perform_command
 
 
