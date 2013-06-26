@@ -115,6 +115,7 @@
 
     <div class="span6">
         <h2>Performing commands</h2>
+        <h4>The command endpoint</h4>
         <p>
           <code>GET /cmd?q=<em>COMMAND</em></code>
         </p>
@@ -126,6 +127,23 @@
         <p>
           Refer to the <a href="http://docs.icinga.org/latest/en/extcommands2.html"> list of external commands</a> for more information.
         </p>
+        <h4>Using another command handler</h4>
+          You can specify the <code>handler</code> argument to use a custom handler, e.G. <a href="/cmd?q=ENABLE_HOST_NOTIFICATIONS;devica01&handler=icinga" ><code>/cmd?q=ENABLE_HOST_NOTIFICATIONS;devica01&handler=icinga</code></a>
+          Currently implemented: <br/>
+          <table border="1">
+            <tr>
+              <th>Handler</th>
+              <th>Effect</th>
+            </tr>
+            <tr>
+              <td>livestatus (default)</td>
+              <td>Uses the livestatus UNIX socket</td>
+            </tr>
+            <tr>
+              <td>icinga</td>
+              <td>Uses the configured icinga command file (commands only)</td>
+            </tr>
+          </table>
     </div>
 
   </div>
