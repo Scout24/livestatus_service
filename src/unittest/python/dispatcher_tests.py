@@ -2,7 +2,7 @@ import unittest
 from mockito import mock, when, verify, unstub, any as any_value
 
 import livestatus_service
-from livestatus_service.dispatcher import perform_command
+from livestatus_service.dispatcher import perform_command, perform_query
 
 class DispatcherTests(unittest.TestCase):
 
@@ -33,3 +33,8 @@ class DispatcherTests(unittest.TestCase):
         mock_config = mock()
         when(livestatus_service.dispatcher).get_current_configuration().thenReturn(mock_config)
         self.assertRaises(BaseException, perform_command, 'FOO;bar', None, 'mylittlepony')
+
+    def test_perform_query_should_raise_exception_when_handler_does_not_exist(self):
+        mock_config = mock()
+        when(livestatus_service.dispatcher).get_current_configuration().thenReturn(mock_config)
+        self.assertRaises(BaseException, perform_query, 'GET HOSTS', None, 'mylittlepony')
