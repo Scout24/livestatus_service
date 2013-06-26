@@ -1,5 +1,4 @@
 from __future__ import absolute_import
-from __future__ import print_function
 
 from livestatus_service.livestatus import perform_query as perform_livestatus_query
 from livestatus_service.livestatus import perform_command as perform_livestatus_command
