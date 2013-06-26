@@ -38,3 +38,13 @@ class DispatcherTests(unittest.TestCase):
         mock_config = mock()
         when(livestatus_service.dispatcher).get_current_configuration().thenReturn(mock_config)
         self.assertRaises(BaseException, perform_query, 'GET HOSTS', None, 'mylittlepony')
+
+    def test_perform_query_should_dispatch_to_livestatus_if_handler_is_livestatus(self):
+        when(livestatus_service.dispatcher).perform_livestatus_query(any_value(), any_value(), any_value()).thenReturn(None)
+        mock_config = mock()
+        mock_config.livestatus_socket = '/path/to/socket'
+        when(livestatus_service.dispatcher).get_current_configuration().thenReturn(mock_config)
+
+        perform_query('FOO;bar', None, 'livestatus')
+
+        verify(livestatus_service.dispatcher).perform_livestatus_query('FOO;bar', '/path/to/socket', None)
