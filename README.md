@@ -62,3 +62,19 @@ By default the service will want to run on port 8080 but you can change this by 
 before building.
 Changing the value of ```project.port_to_run_on = "8080"``` will ensure that pybuilder patches in [the correct port in the httpd configuration files](https://github.com/mriehl/livestatus_service/blob/master/src/main/python/livestatus_service/livestatus_service.conf).
 
+## Authentication
+### Server-side httpd authentication
+Put a file named ```/etc/httpd/conf.d/livestatus_authorization.conf``` on your server.
+The file should consist of access restrictions, e.G.
+```
+<Location />
+  Order deny,allow
+  Deny from all
+  AuthName "Account for Livestatus service"
+  AuthType Basic
+  Require group administrators
+  Require valid-user
+  Satisfy Any
+</Location>
+```
+If the file is not present then there will be no authentication.
