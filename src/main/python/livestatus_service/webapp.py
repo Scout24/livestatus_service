@@ -12,7 +12,7 @@ LOGGER = logging.getLogger('livestatus.webapp')
 application = Flask(__name__)
 
 
-def render_application_template(template_name, **template_parameters):  # pragma: no cover
+def render_application_template(template_name, **template_parameters):
     template_parameters['version'] = livestatus_version
     return render_template(template_name, **template_parameters)
 
