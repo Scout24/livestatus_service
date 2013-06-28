@@ -45,7 +45,7 @@ class Configuration(object):
         if not self._config_parser.has_option(Configuration.SECTION, option):
             if default_value:
                 return default_value
-            raise ValueError("Missing configuration option '%s' in section '%s", option, Configuration.SECTION)
+            raise ValueError("Missing configuration option '%s' in section '%s", option, Configuration.SECTION)  # pragma: no cover
         return self._config_parser.get(Configuration.SECTION, option)
 
     def _load_config_file(self, config_file_name):
