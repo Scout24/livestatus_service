@@ -3,6 +3,9 @@ livestatus-service
 
 [![Build Status](https://travis-ci.org/mriehl/livestatus_service.png?branch=master)](https://travis-ci.org/mriehl/livestatus_service)
 
+[![Coverage Status](https://coveralls.io/repos/mriehl/livestatus_service/badge.png?branch=master)](https://coveralls.io/r/mriehl/livestatus_service?branch=master)
+
+
 ## Background
 Icinga is a pretty cool monitoring solution (especially when compared to a monolithic dinosaur like nagios)
 but unfortunately it lacks any means of remote-control which is a sine qua non requirement for deployment automation.
