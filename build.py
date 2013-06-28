@@ -17,6 +17,7 @@ default_task = ["analyze", "publish"]
 name = "livestatus-service"
 version = "0.1.0"
 description = "Exposes MK's livestatus to the outside world over HTTP"
+summary = description
 authors = (Author("Marcel Wolf", "marcel.wolf@immobilienscout24.de"),
            Author("Maximilien Riehl", "maximilien.riehl@gmail.com"))
 url = "https://github.com/mriehl/livestatus-service"
@@ -47,6 +48,17 @@ def initialize(project):
     project.include_file("livestatus_service", "templates/*.html")
     project.set_property("coverage_threshold_warn", 85)
     project.set_property("coverage_break_build", False)
+
+
+    project.set_property('distutils_classifiers', [
+      'Development Status :: 4 - Beta',
+      'Environment :: Web Environment',
+      'Intended Audience :: Developers',
+      'Intended Audience :: System Administrators',
+      'Programming Language :: Python',
+      'Natural Language :: English',
+      'Operating System :: POSIX :: Linux',
+      'Topic :: System :: Monitoring'])
 
 
 @init(environments='teamcity')
