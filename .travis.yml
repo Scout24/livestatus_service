@@ -6,5 +6,8 @@ python:
 before_script: sudo apt-get install pychecker pylint pep8 rpm python-rpm
 install:
   - pip install pybuilder --use-mirrors
+  - pip install coveralls
   - pyb --debug install_dependencies
-script: "pyb --debug"
+script: "pyb --debug -v verify && coverage run --source=src/main/python/fysom `which pyb` run_unit_tests"
+after_success:
+  - coveralls --verbose
