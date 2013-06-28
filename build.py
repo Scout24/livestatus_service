@@ -23,7 +23,7 @@ summary = "Exposes MK livestatus to the outside world over HTTP"
 authors = (Author("Marcel Wolf", "marcel.wolf@immobilienscout24.de"),
            Author("Maximilien Riehl", "maximilien.riehl@gmail.com"))
 url = "https://github.com/mriehl/livestatus_service"
-license = "WTFPL"
+license = "MIT"
 
 
 @init
@@ -63,7 +63,8 @@ def initialize(project):
       'Topic :: System :: Monitoring',
       'Programming Language :: Python :: 2.6',
       'Programming Language :: Python :: 2.7',
-      'Programming Language :: Python :: 3'
+      'Programming Language :: Python :: 3',
+      'License :: OSI Approved :: MIT License'
       ])
 
 
