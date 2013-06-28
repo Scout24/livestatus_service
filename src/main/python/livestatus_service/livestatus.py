@@ -6,7 +6,7 @@ import logging
 import json
 
 '''
-This file provides function wraps the livestatus UNIX socket to expose it to
+This file wraps the livestatus UNIX socket to expose it to
 python code. It provides ways to abstract access to the socket and to process
 answers.
 '''
