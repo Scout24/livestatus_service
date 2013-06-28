@@ -60,7 +60,11 @@ def initialize(project):
       'Programming Language :: Python',
       'Natural Language :: English',
       'Operating System :: POSIX :: Linux',
-      'Topic :: System :: Monitoring'])
+      'Topic :: System :: Monitoring',
+      'Programming Language :: Python :: 2.6',
+      'Programming Language :: Python :: 2.7',
+      'Programming Language :: Python :: 3'
+      ])
 
 
 @init(environments='teamcity')
