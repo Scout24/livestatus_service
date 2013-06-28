@@ -3,7 +3,10 @@ __author__ = 'mwolf'
 import unittest
 from mockito import when, unstub, any, mock
 import livestatus_service
-from livestatus_service.webapp import dispatch_request, validate_and_dispatch, validate_query
+from livestatus_service.webapp import dispatch_request,\
+                                      validate_and_dispatch,\
+                                      validate_query,\
+                                      handle_index
 
 
 class WebappTests(unittest.TestCase):

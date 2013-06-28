@@ -1,17 +1,18 @@
 from __future__ import absolute_import
-try:
+try:  # pragma: no cover
     import ConfigParser
     configparser = ConfigParser
-except ImportError:
+except ImportError:  # pragma: no cover
     import configparser
 
 
 def get_current_configuration():
-    configuration = Configuration('/etc/livestatus.cfg')
+    configuration = Configuration(Configuration.DEFAULT_CONFIGURATION_FILE)
     return configuration
 
 
 class Configuration(object):
+    DEFAULT_CONFIGURATION_FILE = '/etc/livestatus.cfg'
 
     DEFAULT_LOG_FILE = '/var/log/livestatus-service.log'
     DEFAULT_LIVESTATUS_SOCKET = '/var/lib/nagios/rw/live'
