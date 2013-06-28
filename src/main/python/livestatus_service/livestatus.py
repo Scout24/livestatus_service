@@ -25,7 +25,7 @@ def perform_query(query, socket_path, key=None):
     livestatus_socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     livestatus_socket.connect(socket_path)
 
-    livestatus_socket.send("{0}\n".format(query))
+    livestatus_socket.send("{0}\nOutputFormat: json\n".format(query))
     livestatus_socket.shutdown(socket.SHUT_WR)
     total_data = []
     while True:
@@ -34,7 +34,7 @@ def perform_query(query, socket_path, key=None):
             break
         total_data.append(data)
     answer = ''.join(total_data)
-
+    answer = json.loads(answer)
     formatted_answer = format_answer(query, answer, key)
 
     return json.dumps(formatted_answer, sort_keys=False, indent=4)
@@ -59,10 +59,10 @@ def format_answer(query, answer, key_to_use):
         columns_to_show = determine_columns_to_show_from_query(query)
     except NoColumnsSpecifiedException:
         columns_to_show = determine_columns_to_show_from_answer(answer)
-        if len(answer.splitlines()) <= 1:
+        if len(answer) <= 1:
             message = 'Cannot format answer {0}, either the column definitions or the contents are missing'
             raise ValueError(message.format(answer))
-        answer = '\n'.join(answer.splitlines()[1:])  # first line is the list of columns, remove it
+        answer = answer[1:]  # first line is the list of columns, remove it
 
     if key_to_use is not None and not key_to_use in columns_to_show:
         raise RuntimeError('Cannot use %s as key since it is not a column in the result' % key_to_use)
@@ -82,14 +82,13 @@ def determine_columns_to_show_from_query(query):
 
 
 def determine_columns_to_show_from_answer(answer):
-    columns_line = answer.splitlines()[0]
-    columns_to_show = columns_line.split(';')
-    return columns_to_show
+    columns_line = answer[0]
+    return columns_line
 
 
 def _list_of_rows(answer, columns_to_show):
     formatted_answer = []
-    for row in answer.split():
+    for row in answer:
         formatted_row = _map_columns_to_show_with_one_row_of_actual_values(columns_to_show, row)
         formatted_answer.append(formatted_row)
     return formatted_answer
@@ -97,7 +96,7 @@ def _list_of_rows(answer, columns_to_show):
 
 def _dictionary_of_rows(answer, columns_to_show, key_to_use):
     formatted_answer = {}
-    for row in answer.split():
+    for row in answer:
         formatted_row = _map_columns_to_show_with_one_row_of_actual_values(columns_to_show, row)
         if key_to_use not in formatted_row:
             LOGGER.warn('Skipping row {0} because the key {1} is missing'.format(formatted_row, key_to_use))
@@ -107,4 +106,4 @@ def _dictionary_of_rows(answer, columns_to_show, key_to_use):
 
 
 def _map_columns_to_show_with_one_row_of_actual_values(columns_to_show, row):
-    return dict(zip(columns_to_show, row.split(';')))
+    return dict(zip(columns_to_show, row))
