@@ -41,6 +41,8 @@ def validate_query(query):
     if not query:
         raise ValueError('The "q" parameter (query) is mandatory.')
     query = query.replace('\\n', '\n')
+    if 'OutputFormat' in query:
+        raise ValueError('The query parameter is not allowed to contain an "OutputFormat" directive.')
     return query
 
 

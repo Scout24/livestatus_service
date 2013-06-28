@@ -37,6 +37,9 @@ class WebappTests(unittest.TestCase):
     def test_should_raise_exception_when_query_is_missing(self):
         self.assertRaises(BaseException, validate_query, None)
 
+    def test_should_raise_exception_when_query_specifies_an_outputformat(self):
+        self.assertRaises(BaseException, validate_query, 'foo\nOutputFormat: json\nbar')
+
     def test_should_return_error_when_exception_is_raised(self):
         mock_request = mock()
         mock_args = {'q': 'foobar',
