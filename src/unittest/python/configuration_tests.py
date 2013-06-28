@@ -17,6 +17,7 @@ class ConfigurationTests(unittest.TestCase):
     def test_constructor_should_raise_exception_when_config_file_has_invalid_content(self):
         with tempfile.NamedTemporaryFile() as configuration_file:
             configuration_file.write(b'foobar')
+            configuration_file.flush()
             def callback():
                 Configuration(configuration_file.name)
             self.assertRaises(ValueError, callback)
@@ -26,10 +27,18 @@ class ConfigurationTests(unittest.TestCase):
     def test_constructor_should_raise_exception_when_config_does_not_contain_expected_section(self):
         with tempfile.NamedTemporaryFile() as configuration_file:
             configuration_file.write(b"[spam]\nspam=eggs")
+            configuration_file.flush()
             def callback():
                 Configuration(configuration_file.name)
             self.assertRaises(ValueError, callback)
 
+    def test_constructor_should_raise_exception_when_config_contains_error(self):
+        with tempfile.NamedTemporaryFile() as configuration_file:
+            configuration_file.write(b"[spam]\nspam=%{foobar}")  # illegal variable interpolation
+            configuration_file.flush()
+            def callback():
+                Configuration(configuration_file.name)
+            self.assertRaises(ValueError, callback)
 
 
     def test_should_return_default_log_file_when_no_log_file_option_is_given(self):
