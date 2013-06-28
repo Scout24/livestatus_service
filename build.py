@@ -16,8 +16,10 @@ default_task = ["analyze", "publish"]
 
 name = "livestatus-service"
 version = "0.1.1"
-description = "Exposes MK livestatus to the outside world over HTTP"
-summary = description
+description = "Livestatus-service is a WSGI application that exposes the functionality of a livestatus\
+socket to the outside world over HTTP. Query results are formatted to be more machine readable and it\
+is also possible to send commands over the livestatus socket or using the nagios/icinga command file."
+summary = "Exposes MK livestatus to the outside world over HTTP"
 authors = (Author("Marcel Wolf", "marcel.wolf@immobilienscout24.de"),
            Author("Maximilien Riehl", "maximilien.riehl@gmail.com"))
 url = "https://github.com/mriehl/livestatus-service"
