@@ -20,7 +20,7 @@ class IcingaTests(unittest.TestCase):
         mock_open.return_value = MagicMock(spec=file)
         mock_time.return_value = '123'
 
-        perform_command('FOO;bar', '/path/to/commandfile.cmd', None)
+        perform_command('FOO;bar', '/path/to/commandfile.cmd')
 
         self.assertEqual(mock_open.call_args, call('/path/to/commandfile.cmd', 'w'))
         mock_file = mock_open.return_value.__enter__.return_value

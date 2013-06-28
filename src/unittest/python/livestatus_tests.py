@@ -7,7 +7,6 @@ import livestatus_service
 from livestatus_service.livestatus import   perform_query, \
                                             perform_command, \
                                             format_answer,\
-                                            _dictionary_of_rows,\
                                             NoColumnsSpecifiedException,\
                                             determine_columns_to_show_from_query
 
