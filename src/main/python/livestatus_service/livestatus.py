@@ -40,7 +40,7 @@ def perform_query(query, socket_path, key=None):
     return json.dumps(formatted_answer, sort_keys=False, indent=4)
 
 
-def perform_command(command, socket_path, **kwargs):
+def perform_command(command, socket_path, key=None):
     livestatus_socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
     livestatus_socket.connect(socket_path)
     timestamp = str(int(time.time()))
