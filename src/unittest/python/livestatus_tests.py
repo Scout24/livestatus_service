@@ -110,3 +110,7 @@ Columns: host_name notifications_enabled''', [["devica01",1], ["tuvdbs05",1], ["
     def test_should_parse_two_columns(self):
         answer = format_answer('GET hosts\nColumns: host_name notifications_enabled\nFilter: host_name = devica01\n', [["devica01",1]], None)
         self.assertEqual(answer, [{'notifications_enabled': 1, 'host_name': 'devica01'}])
+
+    def test_should_skip_rows_where_the_key_is_missing(self):
+        answer = format_answer('GET hosts\nColumns: foo bar baz\n', [["foo1","bar1", "baz1"], ["foo2", "bar2"]], 'baz')
+        self.assertEqual(answer, {'baz1': {'baz': 'baz1', 'foo': 'foo1', 'bar': 'bar1'}})
