@@ -28,6 +28,7 @@ class LivestatusSocket(object):
     def _connect(self):
         self._socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         self._socket.connect(self.socket_path)
+        self.connected = True
 
     def connect_if_necessary(self):
         if not self.connected:
