@@ -13,7 +13,17 @@ LOGGER = logging.getLogger('livestatus.icinga')
 
 
 def perform_command(command, command_file_path, key=None):
-    with open(command_file_path, 'w') as command_file:
-        timestamp = str(int(time.time()))
-        command_file.write('[{0}] {1}\n'.format(timestamp, command))
+    icinga_command_file = IcingaCommandHandler(command_file_path)
+    icinga_command_file.send_command(command)
     return 'OK'
+
+
+class IcingaCommandHandler(object):
+
+    def __init__(self, command_file_path):
+        self.command_file_path = command_file_path
+
+    def send_command(self, command):
+        with open(self.command_file_path, 'w') as command_file:
+            timestamp = str(int(time.time()))
+            command_file.write('[{0}] {1}\n'.format(timestamp, command))
