@@ -23,17 +23,24 @@ class LivestatusSocket(object):
 
     def __init__(self, socket_path):
         self.socket_path = socket_path
+        self.connected = False
 
-    def connect(self):
+    def _connect(self):
         self._socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
         self._socket.connect(self.socket_path)
 
+    def connect_if_necessary(self):
+        if not self.connected:
+            self._connect()
+
     def send_command(self, command):
+        self.connect_if_necessary()
         timestamp = str(int(time.time()))
         self._socket.send("COMMAND [{0}] {1}\n".format(timestamp, command))
         self._socket.shutdown(socket.SHUT_WR)
 
     def send_query_and_receive_json_answer(self, query):
+        self.connect_if_necessary()
         self._socket.send("{0}\nOutputFormat: json\n".format(query))
         self._socket.shutdown(socket.SHUT_WR)
         return self.receive_json_answer()
@@ -52,7 +59,6 @@ class LivestatusSocket(object):
 
 def perform_query(query, socket_path, key=None):
     livestatus_socket = LivestatusSocket(socket_path)
-    livestatus_socket.connect()
     answer = livestatus_socket.send_query_and_receive_json_answer(query)
     formatted_answer = format_answer(query, answer, key)
 
@@ -61,7 +67,6 @@ def perform_query(query, socket_path, key=None):
 
 def perform_command(command, socket_path, key=None):
     livestatus_socket = LivestatusSocket(socket_path)
-    livestatus_socket.connect()
     livestatus_socket.send_command(command)
     return "OK"
 
