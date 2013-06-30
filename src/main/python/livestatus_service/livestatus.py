@@ -11,9 +11,6 @@ python code. It provides ways to abstract access to the socket and to process
 answers.
 '''
 
-BUFFER_SIZE = 8192
-
-
 LOGGER = logging.getLogger('livestatus.livestatus')
 
 
@@ -21,31 +18,51 @@ class NoColumnsSpecifiedException(BaseException):
     pass
 
 
-def perform_query(query, socket_path, key=None):
-    livestatus_socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    livestatus_socket.connect(socket_path)
+class LivestatusSocket(object):
+    BUFFER_SIZE = 8192
 
-    livestatus_socket.send("{0}\nOutputFormat: json\n".format(query))
-    livestatus_socket.shutdown(socket.SHUT_WR)
-    total_data = []
-    while True:
-        data = livestatus_socket.recv(BUFFER_SIZE)
-        if not data:
-            break
-        total_data.append(data)
-    answer = ''.join(total_data)
-    answer = json.loads(answer)
+    def __init__(self, socket_path):
+        self.socket_path = socket_path
+
+    def connect(self):
+        self._socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        self._socket.connect(self.socket_path)
+
+    def send_command(self, command):
+        timestamp = str(int(time.time()))
+        self._socket.send("COMMAND [{0}] {1}\n".format(timestamp, command))
+        self._socket.shutdown(socket.SHUT_WR)
+
+    def send_query_and_receive_json_answer(self, query):
+        self._socket.send("{0}\nOutputFormat: json\n".format(query))
+        self._socket.shutdown(socket.SHUT_WR)
+        return self.receive_json_answer()
+
+    def receive_json_answer(self):
+        total_data = []
+        while True:
+            data = self._socket.recv(self.BUFFER_SIZE)
+            if not data:
+                break
+            total_data.append(data)
+        answer = ''.join(total_data)
+        answer = json.loads(answer)
+        return answer
+
+
+def perform_query(query, socket_path, key=None):
+    livestatus_socket = LivestatusSocket(socket_path)
+    livestatus_socket.connect()
+    answer = livestatus_socket.send_query_and_receive_json_answer(query)
     formatted_answer = format_answer(query, answer, key)
 
     return json.dumps(formatted_answer, sort_keys=False, indent=4)
 
 
 def perform_command(command, socket_path, key=None):
-    livestatus_socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    livestatus_socket.connect(socket_path)
-    timestamp = str(int(time.time()))
-    livestatus_socket.send("COMMAND [{0}] {1}\n".format(timestamp, command))
-    livestatus_socket.shutdown(socket.SHUT_WR)
+    livestatus_socket = LivestatusSocket(socket_path)
+    livestatus_socket.connect()
+    livestatus_socket.send_command(command)
     return "OK"
 
 
