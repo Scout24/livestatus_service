@@ -1,12 +1,11 @@
+'''
+    Wraps the icinga named pipe to expose it to python code. It allows writing
+    commands to the file only - queries are not supported.
+'''
+
 from __future__ import absolute_import
-
-import time
 import logging
-
-'''
-This file provides function wraps the icinga named pipe to expose it to
-python code. It allows writing commands to the file.
-'''
+import time
 
 
 LOGGER = logging.getLogger('livestatus.icinga')

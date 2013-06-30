@@ -1,8 +1,7 @@
-__author__ = 'mwolf'
-
-import unittest
-from mockito import when, unstub, any as any_value, mock
 from mock import patch, call
+from mockito import when, unstub, any as any_value, mock
+import unittest
+
 import livestatus_service
 from livestatus_service.webapp import validate_and_dispatch,\
                                       validate_query,\

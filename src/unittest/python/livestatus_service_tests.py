@@ -1,5 +1,6 @@
-import unittest
 from mock import patch, call, PropertyMock
+import unittest
+
 import livestatus_service
 from livestatus_service import initialize_logging
 

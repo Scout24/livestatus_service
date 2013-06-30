@@ -1,13 +1,19 @@
-from __future__ import absolute_import
-import logging
+'''
+    The web application livestatus-service.
+    Contains the routing information and defers handling to imported functions.
+'''
 
+from __future__ import absolute_import
 from flask import Flask, request, render_template
-from livestatus_service.dispatcher import perform_query, perform_command
-from livestatus_service import __version__ as livestatus_version
+import logging
 import traceback
+
+from livestatus_service import __version__ as livestatus_version
+from livestatus_service.dispatcher import perform_query, perform_command
 
 
 LOGGER = logging.getLogger('livestatus.webapp')
+
 
 application = Flask(__name__)
 

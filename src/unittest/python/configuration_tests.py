@@ -1,9 +1,9 @@
-import unittest
-import tempfile
 from mock import patch, call
-
+import tempfile
+import unittest
 
 from livestatus_service.configuration import Configuration, get_current_configuration
+
 
 class ConfigurationTests(unittest.TestCase):
 

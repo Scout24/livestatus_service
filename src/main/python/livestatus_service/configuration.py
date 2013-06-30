@@ -1,3 +1,7 @@
+'''
+    Reads configuration file for livestatus-service and provides defaults.
+'''
+
 from __future__ import absolute_import
 try:  # pragma: no cover
     import ConfigParser

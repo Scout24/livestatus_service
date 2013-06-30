@@ -1,8 +1,9 @@
-import unittest
 from mockito import mock, when, verify, unstub, any as any_value
+import unittest
 
 import livestatus_service
 from livestatus_service.dispatcher import perform_command, perform_query
+
 
 class DispatcherTests(unittest.TestCase):
 

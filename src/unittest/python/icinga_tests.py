@@ -1,11 +1,10 @@
 from __future__ import absolute_import
-
-import unittest
 from mock import patch, MagicMock, call
+import unittest
 
 try:
     import io
-    file = io.IOBase
+    file = io.IOBase  # file is IOBase in python3
 except:
     pass
 

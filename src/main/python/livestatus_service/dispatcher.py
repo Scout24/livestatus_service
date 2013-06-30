@@ -1,10 +1,13 @@
-from __future__ import absolute_import
+'''
+    Decides how queries and commands are performed based on the 'handler'.
+    Then performs the query or command after determining run-time configuration.
+'''
 
+from __future__ import absolute_import
+from livestatus_service.configuration import get_current_configuration
+from livestatus_service.icinga import perform_command as perform_icinga_command
 from livestatus_service.livestatus import perform_query as perform_livestatus_query
 from livestatus_service.livestatus import perform_command as perform_livestatus_command
-from livestatus_service.configuration import get_current_configuration
-
-from livestatus_service.icinga import perform_command as perform_icinga_command
 
 
 def perform_query(query, key=None, handler=None):

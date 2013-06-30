@@ -1,15 +1,15 @@
-from __future__ import absolute_import
+'''
+    Wraps the livestatus UNIX socket to expose it to python code. Provides abstract
+    access to the socket and formatting functions to deal with the livestatus
+    responses.
+'''
 
+from __future__ import absolute_import
+import json
+import logging
 import socket
 import time
-import logging
-import json
 
-'''
-This file wraps the livestatus UNIX socket to expose it to
-python code. It provides ways to abstract access to the socket and to process
-answers.
-'''
 
 LOGGER = logging.getLogger('livestatus.livestatus')
 
