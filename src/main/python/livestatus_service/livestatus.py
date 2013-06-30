@@ -85,7 +85,7 @@ def format_answer(query, answer, key_to_use):
         if len(answer) <= 1:
             message = 'Cannot format answer {0}, either the column definitions or the contents are missing'
             raise ValueError(message.format(answer))
-        answer = answer[1:]  # first line is the list of columns, remove it
+        answer = answer[1:]  # first element is a list with column names, remove it
 
     if key_to_use is not None and not key_to_use in columns_to_show:
         raise RuntimeError('Cannot use %s as key since it is not a column in the result' % key_to_use)
