@@ -33,7 +33,6 @@ class LiveSocket(object):
         self.path = path
         self.response = response
 
-
     def __enter__(self):
         self.start_listening()
         return self
