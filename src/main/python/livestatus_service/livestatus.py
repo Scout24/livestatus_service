@@ -39,12 +39,15 @@ class LivestatusSocket(object):
         timestamp = str(int(time.time()))
         self._socket.send("COMMAND [{0}] {1}\n".format(timestamp, command).encode('utf-8'))
         self._socket.shutdown(socket.SHUT_WR)
+        self._socket.close()
 
     def send_query_and_receive_json_answer(self, query):
         self.connect_if_necessary()
         self._socket.send("{0}\nOutputFormat: json\n".format(query).encode('utf-8'))
         self._socket.shutdown(socket.SHUT_WR)
-        return self.receive_json_answer()
+        answer = self.receive_json_answer()
+        self._socket.close()
+        return answer
 
     def receive_json_answer(self):
         raw_data = []
