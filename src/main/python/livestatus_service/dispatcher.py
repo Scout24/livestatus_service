@@ -12,7 +12,7 @@ from livestatus_service.livestatus import perform_command as perform_livestatus_
 
 def perform_query(query, key=None, handler=None):
     configuration = get_current_configuration()
-    if handler is None or handler == 'livestatus':
+    if _is_livestatus_handler(handler):
         socket_path = configuration.livestatus_socket
         return perform_livestatus_query(query, socket_path, key)
 
@@ -22,7 +22,7 @@ def perform_query(query, key=None, handler=None):
 def perform_command(command, key=None, handler=None):
     configuration = get_current_configuration()
 
-    if handler is None or handler == 'livestatus':
+    if _is_livestatus_handler(handler):
         socket_path = configuration.livestatus_socket
         return perform_livestatus_command(command, socket_path, key)
     elif handler == 'icinga':
@@ -30,3 +30,7 @@ def perform_command(command, key=None, handler=None):
         return perform_icinga_command(command, command_file_path, key)
 
     raise ValueError('No handler {0}.'.format(handler))
+
+
+def _is_livestatus_handler(handler):
+    return handler is None or handler == 'livestatus'
