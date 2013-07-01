@@ -10,7 +10,21 @@ from liveserver import LiveServer
 from livesocket import LiveSocket
 
 expected_response = \
-'''[\n    {\n        "notifications_enabled": 1, \n        "host_name": "devica01"\n    }, \n    {\n        "notifications_enabled": 1, \n        "host_name": "tuvdbs05"\n    }, \n    {\n        "notifications_enabled": 1, \n        "host_name": "tuvdbs06"\n    }\n]\n'''
+'''[
+    {
+        "notifications_enabled": 1,
+        "host_name": "devica01"
+    },
+    {
+        "notifications_enabled": 1,
+        "host_name": "tuvdbs05"
+    },
+    {
+        "notifications_enabled": 1,
+        "host_name": "tuvdbs06"
+    }
+    ]
+'''
 
 
 class Test(unittest.TestCase):
