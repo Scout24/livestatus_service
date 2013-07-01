@@ -18,7 +18,7 @@ class LivestatusTests(unittest.TestCase):
 
     def test_should_read_query_answer_fully(self):
         mock_socket = mock()
-        when(mock_socket).recv(any_value()).thenReturn('{').thenReturn('}').thenReturn(None)
+        when(mock_socket).recv(any_value()).thenReturn(b'{}').thenReturn(None)
         when(livestatus_service.livestatus.socket).socket(any_value(), any_value()).thenReturn(mock_socket)
         when(livestatus_service.livestatus).format_answer(any_value(), any_value(), any_value()).thenReturn(None)
         livestatus_service.livestatus.format_answer = lambda _, x, __: x
@@ -30,7 +30,7 @@ class LivestatusTests(unittest.TestCase):
         livestatus_service.livestatus.format_answer = lambda _, x, __: x
 
         mock_socket = mock()
-        when(mock_socket).recv(any_value()).thenReturn('{').thenReturn('}').thenReturn(None)
+        when(mock_socket).recv(any_value()).thenReturn(b'{}').thenReturn(None)
         when(livestatus_service.livestatus.socket).socket(any_value(), any_value()).thenReturn(mock_socket)
         when(livestatus_service.livestatus).format_answer(any_value(), any_value(), any_value()).thenReturn(None)
 
@@ -40,7 +40,7 @@ class LivestatusTests(unittest.TestCase):
 
     def test_should_open_configured_socket(self):
         mock_socket = mock()
-        when(mock_socket).recv(any_value()).thenReturn('{').thenReturn('}').thenReturn(None)
+        when(mock_socket).recv(any_value()).thenReturn(b'{}').thenReturn(None)
         when(livestatus_service.livestatus.socket).socket(any_value(), any_value()).thenReturn(mock_socket)
         when(livestatus_service.livestatus).format_answer(any_value(), any_value(), any_value()).thenReturn(None)
 
