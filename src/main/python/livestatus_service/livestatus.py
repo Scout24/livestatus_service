@@ -47,14 +47,14 @@ class LivestatusSocket(object):
         return self.receive_json_answer()
 
     def receive_json_answer(self):
-        total_data = []
+        raw_data = []
         while True:
             data = self._socket.recv(self.BUFFER_SIZE)
             if not data:
                 break
-            total_data.append(data)
-        answer = ''.join(total_data)
-        answer = answer.decode('utf-8')
+            raw_data.append(data)
+        decoded_data = [chunk.decode('utf-8') for chunk in raw_data]
+        answer = ''.join(decoded_data)
         answer = json.loads(answer)
         return answer
 
