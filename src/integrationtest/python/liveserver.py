@@ -1,7 +1,10 @@
 import multiprocessing
 import livestatus_service.webapp
 import time
-import urllib2
+try:
+    from urllib2 import urlopen
+except:
+    from urllib.request import urlopen
 
 CONFIGURATION_FILE = "src/integrationtest/resources/livestatus_service_integrationtest.cfg"
 MAX_WAITING_SECONDS = 10
@@ -31,7 +34,7 @@ class LiveServer(object):
 
     def is_server_reachable(self):
         try:
-            urllib2.urlopen(self.url, timeout=TIMEOUT_SECONDS).close()
+            urlopen(self.url, timeout=TIMEOUT_SECONDS).close()
             return True
         except:
             return False
