@@ -24,7 +24,6 @@ class Test(unittest.TestCase):
                 result = urlopen('{0}query?q=GET%20hosts'.format(liveserver.url))
                 self.assertEquals(result.read(), expected_response)
                 written_to_socket = livesocket.incoming.get()
-                print written_to_socket
                 self.assertTrue('GET hosts' in written_to_socket and 'OutputFormat: json' in written_to_socket)
 
 
