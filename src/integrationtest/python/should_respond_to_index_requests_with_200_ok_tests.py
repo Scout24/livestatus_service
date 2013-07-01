@@ -1,5 +1,8 @@
 import unittest
-import urllib2
+try:
+    from urllib2 import urlopen
+except:
+    from urllib.request import urlopen
 
 from liveserver import LiveServer
 
@@ -8,7 +11,7 @@ class Test(unittest.TestCase):
 
     def test(self):
         with LiveServer() as liveserver:
-            response = urllib2.urlopen(liveserver.url)
+            response = urlopen(liveserver.url)
             self.assertEquals(response.code, 200)
 
 
