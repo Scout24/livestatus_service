@@ -15,11 +15,8 @@ def _listen_and_respond(path, response, queue):
     _socket.listen(1)
 
     while True:
-        print >>sys.stderr, 'waiting for a connection'
         connection, client_address = _socket.accept()
         try:
-            print >>sys.stderr, 'connection from', client_address
-
             while True:
                 data = connection.recv(8192)
                 queue.put(data)
