@@ -12,12 +12,12 @@ LOGGER = logging.getLogger('livestatus.icinga')
 
 
 def perform_command(command, command_file_path, key=None):
-    icinga_command_file = IcingaCommandHandler(command_file_path)
+    icinga_command_file = IcingaCommandFile(command_file_path)
     icinga_command_file.send_command(command)
     return 'OK'
 
 
-class IcingaCommandHandler(object):
+class IcingaCommandFile(object):
 
     def __init__(self, command_file_path):
         self.command_file_path = command_file_path
