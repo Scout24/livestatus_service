@@ -1,3 +1,4 @@
+from __future__ import print_function
 import unittest
 try:
     from urllib2 import urlopen
@@ -18,9 +19,9 @@ class Test(unittest.TestCase):
             with LiveSocket('./livestatus_socket', '{}') as livesocket:
                 result = urlopen('{0}cmd?q=DISABLE_HOST_NOTIFICATIONS;devica01'.format(liveserver.url))
                 self.assertEquals(result.read(), b'OK\n')
-                answers = [chunk.decode('utf-8') for chunk in livesocket.incoming.get()]
-                answer = ''.join(answers)
-                self.assertTrue('DISABLE_HOST_NOTIFICATIONS;devica01' in answer)
+                answer = livesocket.incoming_writes()
+                print(answer)
+                self.assertTrue('DISABLE_HOST_NOTIFICATIONS;devica01' in ''.join(answer))
 
 
 if __name__ == '__main__':

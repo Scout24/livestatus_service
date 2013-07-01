@@ -33,6 +33,16 @@ class LiveSocket(object):
         self.path = path
         self.response = response
 
+    def incoming_writes(self):
+        items = []
+        while True:
+            try:
+                items.append(self.incoming.get_nowait())
+            except:
+                break
+        return items
+
+
     def __enter__(self):
         self.start_listening()
         return self
