@@ -17,13 +17,10 @@ def _listen_and_respond(path, response, queue):
     while True:
         connection, client_address = _socket.accept()
         try:
-            while True:
-                data = connection.recv(8192)
-                queue.put(data.decode('utf-8'))
-                if data is None and response:
-                    connection.sendall(response.encode('utf-8'))
-                else:
-                    break
+            data = connection.recv(8192)
+            queue.put(data.decode('utf-8'))
+            if response:
+                connection.sendall(str(response).encode('utf-8'))
         finally:
             connection.close()
 
