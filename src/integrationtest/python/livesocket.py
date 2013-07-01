@@ -21,7 +21,7 @@ def _listen_and_respond(path, response, queue):
                 data = connection.recv(8192)
                 queue.put(data)
                 if data is None and response:
-                    connection.sendall(response)
+                    connection.sendall(response.encode('utf-8'))
                 else:
                     break
         finally:
