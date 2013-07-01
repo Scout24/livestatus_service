@@ -19,7 +19,7 @@ def _listen_and_respond(path, response, queue):
         try:
             while True:
                 data = connection.recv(8192)
-                queue.put(data)
+                queue.put(data.decode('utf-8'))
                 if data is None and response:
                     connection.sendall(response.encode('utf-8'))
                 else:
@@ -32,16 +32,6 @@ class LiveSocket(object):
     def __init__(self, path, response):
         self.path = path
         self.response = response
-
-    def incoming_writes(self):
-        items = []
-        while True:
-            try:
-                items.append(self.incoming.get_nowait())
-            except:
-                break
-        return items
-
 
     def __enter__(self):
         self.start_listening()

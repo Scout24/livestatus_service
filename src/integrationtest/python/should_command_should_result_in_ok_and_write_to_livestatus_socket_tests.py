@@ -19,9 +19,8 @@ class Test(unittest.TestCase):
             with LiveSocket('./livestatus_socket', '{}') as livesocket:
                 result = urlopen('{0}cmd?q=DISABLE_HOST_NOTIFICATIONS;devica01'.format(liveserver.url))
                 self.assertEquals(result.read(), b'OK\n')
-                answer = livesocket.incoming_writes()
-                print(answer)
-                self.assertTrue('DISABLE_HOST_NOTIFICATIONS;devica01' in ''.join(answer))
+                answer = livesocket.incoming.get()
+                self.assertTrue('DISABLE_HOST_NOTIFICATIONS;devica01' in answer)
 
 
 if __name__ == '__main__':
