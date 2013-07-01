@@ -9,6 +9,7 @@ from mock import patch, PropertyMock
 from liveserver import LiveServer
 from livesocket import LiveSocket
 
+
 class Test(unittest.TestCase):
     @patch('livestatus_service.dispatcher.get_current_configuration')
     def test(self, get_config):
