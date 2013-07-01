@@ -36,7 +36,7 @@ class LivestatusTests(unittest.TestCase):
 
         perform_query('test', '/path/to/socket')
 
-        verify(mock_socket).send('test\nOutputFormat: json\n')
+        verify(mock_socket).send(b'test\nOutputFormat: json\n')
 
     def test_should_open_configured_socket(self):
         mock_socket = mock()
@@ -55,7 +55,7 @@ class LivestatusTests(unittest.TestCase):
 
         perform_command('foobar', '/path/to/socket')
 
-        verify(mock_socket).send('COMMAND [123] foobar\n')
+        verify(mock_socket).send(b'COMMAND [123] foobar\n')
 
 class LivestatusAnswerParsingTests(unittest.TestCase):
 
