@@ -4,8 +4,9 @@ python:
   - "2.7"
   - "3.3"
   - "pypy"
-before_script: sudo apt-get install pychecker pylint pep8 rpm python-rpm && sudo chmod -R 777 /dev/shm
+before_script: sudo apt-get install pychecker pylint pep8 rpm python-rpm
 install:
+  - sudo rm -rf /dev/shm && sudo ln -s /run/shm /dev/shm
   - pip install pybuilder --use-mirrors
   - pip install coveralls
   - pyb --debug install_dependencies
