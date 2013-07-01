@@ -54,6 +54,7 @@ class LivestatusSocket(object):
                 break
             total_data.append(data)
         answer = ''.join(total_data)
+        answer = answer.decode('utf-8')
         answer = json.loads(answer)
         return answer
 
