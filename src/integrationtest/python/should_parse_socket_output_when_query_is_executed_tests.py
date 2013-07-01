@@ -39,8 +39,8 @@ class Test(unittest.TestCase):
                 result = urlopen('{0}query?q=GET%20hosts'.format(liveserver.url))
                 actual_result = json.loads(result.read().decode('utf-8'))
                 expected_result = json.loads(expected_response)
-                diff = [ element for element in actual_result if element not in expected_result]
-                self.assertEquals(diff, [], 'Found difference between expected and actual result : %s'%diff)
+                self.maxDiff = None  # better error messages
+                self.assertDictEqual(expected_result, actual_result)
                 written_to_socket = livesocket.incoming.get()
                 self.assertTrue('GET hosts' in written_to_socket and 'OutputFormat: json' in written_to_socket)
 
