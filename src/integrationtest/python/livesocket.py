@@ -1,7 +1,7 @@
 import multiprocessing
 import socket
 import os
-import sys
+import time
 
 
 def _listen_and_respond(path, response, queue):
@@ -45,6 +45,7 @@ class LiveSocket(object):
         self.incoming = multiprocessing.Queue()
         self._process = multiprocessing.Process(target=worker, args=(self.path, self.response, self.incoming))
         self._process.start()
+        time.sleep(5)
 
     def stop_listening(self):
         self._process.terminate()
