@@ -40,6 +40,7 @@ class Test(unittest.TestCase):
                 actual_result = json.loads(result.read().decode('utf-8'))
                 expected_result = json.loads(expected_response)
                 diff = [ element for element in actual_result if element not in expected_result]
+                diff.extend([element for element in expected_result if element not in actual_result])
                 self.assertEquals(diff, [], 'Found difference between expected and actual result : %s'%diff)
                 written_to_socket = livesocket.incoming.get()
                 self.assertTrue('GET hosts' in written_to_socket and 'OutputFormat: json' in written_to_socket)
