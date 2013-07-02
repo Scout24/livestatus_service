@@ -37,7 +37,7 @@ class Test(unittest.TestCase):
             with LiveSocket('./livestatus_socket', socket_response) as livesocket:
                 api_call_result = urlopen('{0}query?q=GET%20hosts&key=host_name'.format(liveserver.url))
                 actual_api_response = json.loads(api_call_result.read().decode('utf-8'))
-                self.assertDictEqual(expected_api_call_response, actual_api_response)
+                self.assertEquals(expected_api_call_response, actual_api_response)
                 written_to_socket = livesocket.incoming.get()
                 self.assertTrue('GET hosts' in written_to_socket and 'OutputFormat: json' in written_to_socket)
 
