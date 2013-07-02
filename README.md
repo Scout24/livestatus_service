@@ -1,9 +1,9 @@
 livestatus-service
 ==================
 
-[![Build Status](https://travis-ci.org/mriehl/livestatus_service.png?branch=master)](https://travis-ci.org/mriehl/livestatus_service)
+[![Build Status](https://travis-ci.org/ImmobilienScout24/livestatus_service.png?branch=master)](https://travis-ci.org/ImmobilienScout24/livestatus_service)
 
-[![Coverage Status](https://coveralls.io/repos/mriehl/livestatus_service/badge.png?branch=master)](https://coveralls.io/r/mriehl/livestatus_service?branch=master)
+[![Coverage Status](https://coveralls.io/repos/ImmobilienScout24/livestatus_service/badge.png?branch=master)](https://coveralls.io/r/ImmobilienScout24/livestatus_service?branch=master)
 
 
 ## Background
@@ -32,7 +32,7 @@ access configuration of your choice.
 
 ## One-step checkout, test, build
 ```bash
-sudo pip install pyb-init && pyb-init github mriehl : livestatus_service
+sudo pip install pyb-init && pyb-init github ImmobilienScout24 : livestatus_service
 ```
 
 Afterwards, building and packaging can be done with
@@ -60,12 +60,12 @@ The application should work out-of-the-box.
 
 ## Configuration
 ### Application configuration
-See [the example config file](https://github.com/mriehl/livestatus_service/blob/master/livestatus.cfg).
+See [the example config file](https://github.com/ImmobilienScout24/livestatus_service/blob/master/livestatus.cfg).
 Configuration should be in /etc/livestatus.cfg
 ### Webserver configuration
-By default the service will want to run on port 8080 but you can change this by modifying [the build configuration](https://github.com/mriehl/livestatus_service/blob/master/build.py)
+By default the service will want to run on port 8080 but you can change this by modifying [the build configuration](https://github.com/ImmobilienScout24/livestatus_service/blob/master/build.py)
 before building.
-Changing the value of ```project.port_to_run_on = "8080"``` will ensure that pybuilder patches in [the correct port in the httpd configuration files](https://github.com/mriehl/livestatus_service/blob/master/src/main/python/livestatus_service/livestatus_service.conf).
+Changing the value of ```project.port_to_run_on = "8080"``` will ensure that pybuilder patches in [the correct port in the httpd configuration files](https://github.com/ImmobilienScout24/livestatus_service/blob/master/src/main/python/livestatus_service/livestatus_service.conf).
 
 ## Authentication
 ### Server-side httpd authentication
