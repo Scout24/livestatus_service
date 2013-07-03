@@ -29,6 +29,8 @@ access configuration of your choice.
  * Built-in access to the icinga command pipe
  * Tested codebase
 
+## License
+MIT
 
 ## One-step checkout, test, build
 ```bash
