@@ -46,7 +46,7 @@ is also possible to send commands over the livestatus socket or using the nagios
 summary = "Exposes MK livestatus to the outside world over HTTP"
 authors = (Author("Marcel Wolf", "marcel.wolf@immobilienscout24.de"),
            Author("Maximilien Riehl", "maximilien.riehl@gmail.com"))
-url = "https://github.com/mriehl/livestatus_service"
+url = "https://github.com/ImmobilienScout24/livestatus_service"
 license = "MIT"
 
 
