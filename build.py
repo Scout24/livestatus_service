@@ -64,6 +64,8 @@ def initialize(project):
 
     project.set_property('copy_resources_target', '$dir_dist')
     project.get_property('copy_resources_glob').append('setup.cfg')
+    project.get_property('copy_resources_glob').append('README')
+
     project.get_property("filter_resources_glob").append("**/livestatus_service/__init__.py")
     project.get_property("filter_resources_glob").append("**/livestatus_service/livestatus_service.conf")
 
