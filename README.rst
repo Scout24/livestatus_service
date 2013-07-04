@@ -6,10 +6,6 @@ livestatus-service
    :align: left
    :target: https://travis-ci.org/ImmobilienScout24/livestatus_service
 
-.. image:: https://coveralls.io/repos/ImmobilienScout24/livestatus_service/badge.png?branch=master
-    :target: https://coveralls.io/r/ImmobilienScout24/livestatus_service?branch=master
-    :alt: Coverage status
-
 .. image:: https://pypip.in/v/livestatus-service/badge.png
     :target: https://crate.io/packages/livestatus-service/
     :alt: Latest PyPI version
