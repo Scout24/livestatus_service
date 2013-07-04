@@ -39,7 +39,7 @@ use_plugin("python.install_dependencies")
 default_task = ["analyze", "publish"]
 
 name = "livestatus-service"
-version = "0.3.0"
+version = "0.3.1"
 description = "Livestatus-service is a WSGI application that exposes the functionality of a livestatus \
 socket to the outside world over HTTP. \nQuery results are formatted to be more machine readable and it \
 is also possible to send commands over the livestatus socket or using the nagios/icinga command file."
