@@ -2,9 +2,9 @@ livestatus-service
 ==================
 
 [![Build Status](https://travis-ci.org/ImmobilienScout24/livestatus_service.png?branch=master)](https://travis-ci.org/ImmobilienScout24/livestatus_service)
-
 [![Coverage Status](https://coveralls.io/repos/ImmobilienScout24/livestatus_service/badge.png?branch=master)](https://coveralls.io/r/ImmobilienScout24/livestatus_service?branch=master)
-
+[![PyPi version](https://pypip.in/v/livestatus-service/badge.png)](https://crate.io/packages/livestatus-service/)
+[![PyPi downloads](https://pypip.in/d/livestatus-service/badge.png)](https://crate.io/packages/livestatus-service/)
 
 ## Background
 Icinga is a pretty cool monitoring solution (especially when compared to a monolithic dinosaur like nagios)
