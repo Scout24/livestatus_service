@@ -23,7 +23,7 @@ THE SOFTWARE.
 '''
 
 from __future__ import absolute_import
-import json
+import simplejson as json
 import logging
 import socket
 import time

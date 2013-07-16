@@ -57,6 +57,7 @@ def initialize(project):
 
 
     project.depends_on("flask")
+    project.depends_on("simplejson")
 
 
     project.set_property('copy_resources_target', '$dir_dist')

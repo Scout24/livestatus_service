@@ -28,7 +28,7 @@ try:
 except:
     from urllib.request import urlopen
 from mock import patch, PropertyMock
-import json
+import simplejson as json
 
 from liveserver import LiveServer
 from livesocket import LiveSocket
