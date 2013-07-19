@@ -60,7 +60,7 @@ class WebappTests(unittest.TestCase):
 
         response = validate_and_dispatch(mock_request, lambda x: None)
 
-        self.assertEquals(response, ('Error : too fat to fly', 500))
+        self.assertEquals(response, ('Error : too fat to fly', 200))
 
     def test_should_raise_exception_when_query_is_missing(self):
         self.assertRaises(BaseException, validate_query, None)

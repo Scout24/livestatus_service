@@ -85,4 +85,4 @@ def validate_and_dispatch(request, dispatch_function):
         return dispatch_request(query, dispatch_function, key=key, handler=handler)
     except BaseException as exception:
         LOGGER.error(traceback.format_exc())
-        return 'Error : %s' % exception, 500
+        return 'Error : %s' % exception, 200
