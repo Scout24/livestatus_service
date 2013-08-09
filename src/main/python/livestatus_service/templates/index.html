@@ -116,14 +116,40 @@
     <div class="span6">
         <h2>Performing commands</h2>
         <h3>The command endpoint</h3>
+        <h4>Basics</h4>
+    </div>
+        <div class="span3">
+        <h5> GET </h5>
         <p>
           <code>GET /cmd?q=<em>COMMAND</em></code>
         </p>
+        </div>
+        <div class="span3">
+        <h5> POST </h5>
+        <p>
+          <code>POST /cmd {q: <em>COMMAND</em>}</code>
+        </p>
+        </div>
+    <div class="span6">
+        <h4>Effect</h4>
         <p>
           Will perform a command using <em>COMMAND</em>.<br />
           The <code>COMMAND [%s]</code> directive will be inserted for you.<br />
-          Example : <a href="/cmd?q=ENABLE_HOST_NOTIFICATIONS;devica01"> <code>/cmd?q=ENABLE_HOST_NOTIFICATIONS;devica01</code></a>
         </p>
+        <h4>Example</h4>
+    </div>
+      <div class="span3">
+          <h5> GET </h5>
+          <a href="/cmd?q=ENABLE_HOST_NOTIFICATIONS;devica01"> <code style="display:block">/cmd?q=<br/>ENABLE_HOST_NOTIFICATIONS;devica01</code></a><br/>
+      </div>
+      <div class="span3">
+          <h5> POST </h5>
+          <form action="/cmd" method="post">
+                  q: <input name="q" type="text" size="25" value="ENABLE_HOST_NOTIFICATIONS;devica01" />
+                  <input name="submit" type="submit" value="submit" />
+          </form>
+      </div>
+      <div class="span6">
         <p>
           Refer to the <a href="http://docs.icinga.org/latest/en/extcommands2.html"> list of external commands</a> for more information.
         </p>
