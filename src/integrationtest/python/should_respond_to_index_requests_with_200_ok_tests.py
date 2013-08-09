@@ -23,6 +23,7 @@ THE SOFTWARE.
 '''
 
 import unittest
+
 try:
     from urllib2 import urlopen
 except:

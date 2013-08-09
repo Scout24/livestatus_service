@@ -23,10 +23,12 @@ THE SOFTWARE.
 '''
 
 import unittest
+
 try:
     from urllib2 import urlopen
 except:
     from urllib.request import urlopen
+
 from mock import patch, PropertyMock
 import simplejson as json
 
