@@ -68,7 +68,7 @@ def initialize(project):
     project.install_file('/etc/httpd/conf.d/', 'livestatus_service/livestatus_service.conf')
 
     project.include_file("livestatus_service", "templates/*.html")
-    project.set_property("coverage_threshold_warn", 85)
+    project.set_property("coverage_threshold_warn", 99)
     project.set_property("coverage_break_build", False)
 
     project.set_property('distutils_classifiers', [
