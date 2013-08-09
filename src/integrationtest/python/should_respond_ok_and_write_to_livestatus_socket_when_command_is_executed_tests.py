@@ -54,7 +54,8 @@ class Test(unittest.TestCase):
                 parameters = {'q': 'DISABLE_HOST_NOTIFICATIONS;devica01',
                               }
                 data = urlencode(parameters)
-                request = Request(url, data)
+                binary_data = data.encode('utf-8')
+                request = Request(url, binary_data)
                 response = urlopen(request)
                 self.assertEquals(response.read(), b'OK\n')
                 written_to_socket = livesocket.incoming.get()
