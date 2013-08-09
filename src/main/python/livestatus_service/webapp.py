@@ -57,7 +57,7 @@ def handle_query():
     return validate_and_dispatch(request, perform_query)
 
 
-@application.route('/cmd', methods=['GET'])
+@application.route('/cmd', methods=['GET', 'POST'])
 def handle_command():
     return validate_and_dispatch(request, perform_command)
 
@@ -78,10 +78,10 @@ def validate_query(query):
 
 def validate_and_dispatch(request, dispatch_function):
     try:
-        query = request.args.get('q')
+        query = request.args.get('q') or request.form.get('q')
         query = validate_query(query)
         key = request.args.get('key')
-        handler = request.args.get('handler')
+        handler = request.args.get('handler') or request.form.get('handler')
         return dispatch_request(query, dispatch_function, key=key, handler=handler)
     except BaseException as exception:
         LOGGER.error(traceback.format_exc())

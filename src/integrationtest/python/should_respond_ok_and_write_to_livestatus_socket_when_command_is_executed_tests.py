@@ -22,31 +22,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 '''
 
+from __future__ import print_function
 import unittest
+
 try:
-    from urllib2 import urlopen
-except:
-    from urllib.request import urlopen
+    from urllib import urlencode
+except ImportError:
+    from urllib.parse import urlencode
+
+try:
+    from urllib2 import urlopen, Request
+except ImportError:
+    from urllib.request import urlopen, Request
+
 from mock import patch, PropertyMock
-import simplejson as json
 
 from liveserver import LiveServer
 from livesocket import LiveSocket
-
-expected_api_call_response = {
-    u'devica01': {
-        u'notifications_enabled': 1,
-        u'host_name': 'devica01'
-    },
-    u'tuvdbs06': {
-        u'notifications_enabled': 1,
-        u'host_name': 'tuvdbs06'
-    },
-    u'tuvdbs05': {
-        u'notifications_enabled': 1,
-        u'host_name': 'tuvdbs05'
-    }
-}
 
 
 class Test(unittest.TestCase):
@@ -56,13 +48,17 @@ class Test(unittest.TestCase):
         mock_configuration.livestatus_socket = './livestatus_socket'
         get_config.return_value = mock_configuration
         with LiveServer() as liveserver:
-            socket_response = '[["host_name","notifications_enabled"],["devica01", 1], ["tuvdbs05",1], ["tuvdbs06",1]]'
-            with LiveSocket('./livestatus_socket', socket_response) as livesocket:
-                api_call_result = urlopen('{0}query?q=GET%20hosts&key=host_name'.format(liveserver.url))
-                actual_api_response = json.loads(api_call_result.read().decode('utf-8'))
-                self.assertEquals(expected_api_call_response, actual_api_response)
+            with LiveSocket('./livestatus_socket', '{}') as livesocket:
+
+                url = '{0}cmd'.format(liveserver.url)
+                parameters = {'q': 'DISABLE_HOST_NOTIFICATIONS;devica01',
+                              }
+                data = urlencode(parameters)
+                request = Request(url, data)
+                response = urlopen(request)
+                self.assertEquals(response.read(), b'OK\n')
                 written_to_socket = livesocket.incoming.get()
-                self.assertTrue('GET hosts' in written_to_socket and 'OutputFormat: json' in written_to_socket)
+                self.assertTrue('DISABLE_HOST_NOTIFICATIONS;devica01' in written_to_socket)
 
 
 if __name__ == '__main__':
