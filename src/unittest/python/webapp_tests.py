@@ -97,16 +97,19 @@ class WebappTests(unittest.TestCase):
     def test_render_app_template_should_render_template_with_version(self, mock_render):
         render_application_template('index.html')
 
-        self.assertEquals(mock_render.call_args, call('index.html', version=livestatus_service.__version__))
+        self.assertEquals(mock_render.call_args, call('index.html',
+                                                      version=livestatus_service.__version__))
 
     @patch('livestatus_service.webapp.validate_and_dispatch')
     def test_handle_command_should_dispatch_with_perform_command(self, mock_dispatch):
         handle_command()
 
-        self.assertEquals(mock_dispatch.call_args, call(livestatus_service.webapp.request, livestatus_service.webapp.perform_command))
+        self.assertEquals(mock_dispatch.call_args, call(livestatus_service.webapp.request,
+                                                        livestatus_service.webapp.perform_command))
 
     @patch('livestatus_service.webapp.validate_and_dispatch')
     def test_handle_query_should_dispatch_with_perform_query(self, mock_dispatch):
         handle_query()
 
-        self.assertEquals(mock_dispatch.call_args, call(livestatus_service.webapp.request, livestatus_service.webapp.perform_query))
+        self.assertEquals(mock_dispatch.call_args, call(livestatus_service.webapp.request,
+                                                        livestatus_service.webapp.perform_query))

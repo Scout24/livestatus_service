@@ -42,7 +42,7 @@ name = "livestatus-service"
 version = "0.3.3"
 summary = "Exposes MK livestatus to the outside world over HTTP"
 authors = (Author("Marcel Wolf", "marcel.wolf@immobilienscout24.de"),
-           Author("Maximilien Riehl", "maximilien.riehl@gmail.com"))
+           Author("Maximilien Riehl", "maximilien.riehl@immobilienscout24.de"))
 url = "https://github.com/ImmobilienScout24/livestatus_service"
 license = "MIT"
 

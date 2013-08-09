@@ -37,21 +37,20 @@ class ConfigurationTests(unittest.TestCase):
 
         self.assertRaises(ValueError, callback)
 
-
     def test_constructor_should_raise_exception_when_config_file_has_invalid_content(self):
         with tempfile.NamedTemporaryFile() as configuration_file:
             configuration_file.write(b'foobar')
             configuration_file.flush()
+
             def callback():
                 Configuration(configuration_file.name)
             self.assertRaises(ValueError, callback)
-
-
 
     def test_constructor_should_raise_exception_when_config_does_not_contain_expected_section(self):
         with tempfile.NamedTemporaryFile() as configuration_file:
             configuration_file.write(b"[spam]\nspam=eggs")
             configuration_file.flush()
+
             def callback():
                 Configuration(configuration_file.name)
             self.assertRaises(ValueError, callback)
@@ -60,10 +59,10 @@ class ConfigurationTests(unittest.TestCase):
         with tempfile.NamedTemporaryFile() as configuration_file:
             configuration_file.write(b"[spam]\nspam=%{foobar}")  # illegal variable interpolation
             configuration_file.flush()
+
             def callback():
                 Configuration(configuration_file.name)
             self.assertRaises(ValueError, callback)
-
 
     def test_should_return_default_log_file_when_no_log_file_option_is_given(self):
         with tempfile.NamedTemporaryFile() as configuration_file:
@@ -72,15 +71,12 @@ class ConfigurationTests(unittest.TestCase):
             config = Configuration(configuration_file.name)
             self.assertEquals(config.log_file, Configuration.DEFAULT_LOG_FILE)
 
-
-
     def test_should_return_given_log_file_when_log_file_option_is_given(self):
         with tempfile.NamedTemporaryFile() as configuration_file:
             configuration_file.write(b"[livestatus-service]\nlog_file=spam.log")
             configuration_file.flush()
             config = Configuration(configuration_file.name)
             self.assertEquals(config.log_file, "spam.log")
-
 
     def test_should_return_default_livestatus_socket(self):
         with tempfile.NamedTemporaryFile() as configuration_file:
@@ -89,7 +85,6 @@ class ConfigurationTests(unittest.TestCase):
             config = Configuration(configuration_file.name)
             self.assertEquals(config.livestatus_socket, Configuration.DEFAULT_LIVESTATUS_SOCKET)
 
-
     def test_should_return_configured_livestatus_socket(self):
         with tempfile.NamedTemporaryFile() as configuration_file:
             configuration_file.write(b"[livestatus-service]\nlivestatus_socket=foo/bar")
@@ -97,14 +92,12 @@ class ConfigurationTests(unittest.TestCase):
             config = Configuration(configuration_file.name)
             self.assertEquals(config.livestatus_socket, "foo/bar")
 
-
     def test_should_return_default_icinga_command_file(self):
         with tempfile.NamedTemporaryFile() as configuration_file:
             configuration_file.write(b"[livestatus-service]\n")
             configuration_file.flush()
             config = Configuration(configuration_file.name)
             self.assertEquals(config.icinga_command_file, Configuration.DEFAULT_ICINGA_COMMAND_FILE)
-
 
     def test_should_return_configured_icinga_command_file(self):
         with tempfile.NamedTemporaryFile() as configuration_file:
