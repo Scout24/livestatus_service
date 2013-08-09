@@ -60,13 +60,15 @@ class LivestatusSocket(object):
     def send_command(self, command):
         self.connect_if_necessary()
         timestamp = str(int(time.time()))
-        self._socket.send("COMMAND [{0}] {1}\n".format(timestamp, command).encode('utf-8'))
+        self._socket.send("COMMAND [{0}] {1}\n".format(timestamp,
+                                                       command).encode('utf-8'))
         self._socket.shutdown(socket.SHUT_WR)
         self._socket.close()
 
     def send_query_and_receive_json_answer(self, query):
         self.connect_if_necessary()
-        self._socket.send("{0}\nOutputFormat: json\n".format(query).encode('utf-8'))
+        self._socket.send("{0}\nOutputFormat: json\n"
+                          .format(query).encode('utf-8'))
         self._socket.shutdown(socket.SHUT_WR)
         answer = self.receive_json_answer()
         self._socket.close()
@@ -103,7 +105,8 @@ def format_answer(query, answer, key_to_use):
     """
     Answers come in two different types :
      - Columns were specified in the LQL, so the query must be parsed
-     - Columns were not specified, they are then the first line in the result, so the answer must be parsed
+     - Columns were not specified, they are then the first line in the result,
+       so the answer must be parsed
     """
     try:
         columns_to_show = determine_columns_to_show_from_query(query)
