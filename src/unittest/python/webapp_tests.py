@@ -27,13 +27,13 @@ from mockito import when, unstub, any as any_value, mock
 import unittest
 
 import livestatus_service
-from livestatus_service.webapp import validate_and_dispatch,\
-                                      validate_query,\
-                                      dispatch_request,\
-                                      handle_index,\
-                                      render_application_template,\
-                                      handle_command,\
-                                      handle_query
+from livestatus_service.webapp import (validate_and_dispatch,
+                                       validate_query,
+                                       dispatch_request,
+                                       handle_index,
+                                       render_application_template,
+                                       handle_command,
+                                       handle_query)
 
 
 class WebappTests(unittest.TestCase):
@@ -74,7 +74,12 @@ class WebappTests(unittest.TestCase):
                      'handler': 'spam',
                      'key': 'bacon'}
         mock_request.args = mock_args
-        concatenate_args = lambda query, dispatch_function, **kwargs : query + dispatch_function + kwargs['key'] + kwargs['handler']
+
+        concatenate_args = (lambda query, dispatch_function, **kwargs:
+                            query +
+                            dispatch_function +
+                            kwargs['key'] +
+                            kwargs['handler'])
 
         livestatus_service.webapp.dispatch_request = concatenate_args
 
