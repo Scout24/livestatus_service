@@ -69,7 +69,7 @@ def initialize(project):
 
     project.include_file("livestatus_service", "templates/*.html")
     project.set_property("coverage_threshold_warn", 99)
-    project.set_property("coverage_break_build", False)
+    project.set_property("coverage_break_build", True)
 
     project.set_property('distutils_classifiers', [
         'Development Status :: 4 - Beta',
