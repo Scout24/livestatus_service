@@ -3,23 +3,23 @@
 {% block title %}Index{% endblock %}
 {% block head %}
 {{ super() }}
-<link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-
 <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?lang=yaml&skin=default"></script>
 <a href="https://github.com/ImmobilienScout24/livestatus_service"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 <div class="container">
-  <div class="hero-unit">
+  <div class="jumbotron">
     <h1>Livestatus-service</h1>
     <p class="lead">
       Livestatus-service exposes the functionality of a livestatus socket to the outside world over HTTP.
     </p>
   </div>
-  <div class="row-fluid marketing">
 
-    <div class="span6">
+
+  <div class="row-fluid marketing">
+    <div class="col-lg-6">
         <h2>Performing queries</h2>
         <h3>Basics</h3>
         <p>
@@ -27,17 +27,63 @@
         </p>
         <p>
           Will perform a query using <em>QUERY</em>.<br />
-          Example : <a href="/query?q=GET%20hosts"><code>/query?q=GET%20hosts</code></a>
         </p>
+        <h4>Example</h4>
+          <a href="/query?q=GET%20hosts"><code>/query?q=GET%20hosts</code></a>
+          <p>If you need newlines, e.G. to add a filter, use <code>\n</code>.</p>
+   </div>
+   <div class="col-lg-6">
+        <h2>Performing commands</h2>
+        <h3>Basics</h3>
+  </div>
+        <div class="col-lg-3">
+        <h4> GET </h4>
         <p>
-          If you need newlines, e.G. to add a filter, use <code>\n</code>.<br />
-          <a href="/query?q=GET%20hosts\nColumns:%20host_name%20notifications_enabled\nFilter:%20host_name%20=%20devica01">Example : query notifications_enabled for host <em>devica01</em>.</a>
+          <code>GET /cmd?q=<em>COMMAND</em></code>
         </p>
+        </div>
+        <div class="col-lg-3">
+        <h4> POST </h4>
         <p>
-          See the <a href="http://mathias-kettner.de/checkmk_livestatus.html#H1:LQL%20-%20The%20Livestatus%20Query%20Language">LQL documentation</a> for more information.
+          <code>POST /cmd {q: <em>COMMAND</em>}</code>
         </p>
+        </div>
+    <div class="col-lg-6">
+        <p>
+          Will perform a command using <em>COMMAND</em>.<br />
+          The <code>COMMAND [%s]</code> directive will be inserted for you.<br />
+        </p>
+        <h4>Example</h4>
+    </div>
+    <div class="col-lg-6">
+    </div>
+      <div class="col-lg-3">
+          <h5> GET </h5>
+          <a href="/cmd?q=ENABLE_HOST_NOTIFICATIONS;devica01"> <code style="display:block">/cmd?q=ENABLE_<br/>HOST_NOTIFICATIONS;devica01</code></a><br/>
+      </div>
+      <div class="col-lg-3">
+          <h5> POST </h5>
+          <form action="/cmd" method="post" class="form-signin">
+          <input type="text" class="input-block-level" name="q" value="ENABLE_HOST_NOTIFICATIONS;devica01">
+                  <button class="btn" type="submit">Run</button>
+
+          </form>
+      </div>
+  </div>
+
+  <div class="row-fluid-marketing">
+    <div class="col-lg-6">
+              <a class="btn btn-primary btn-large" href="http://mathias-kettner.de/checkmk_livestatus.html#H1:LQL%20-%20The%20Livestatus%20Query%20Language">Refer to the LQL documentation</a>
+    </div>
+    <div class="col-lg-6">
+         <a class="btn btn-primary btn-large" href="http://docs.icinga.org/latest/en/extcommands2.html">Refer to the list of external commands</a>
+    </div>
+  </div>
+
+  <div class="row-fluid marketing">
+    <div class="col-lg-6">
         <h3>
-          Pretty query results
+          Advanced
         </h3>
         <h4>
           Default output format
@@ -113,49 +159,13 @@
         </p>
     </div>
 
-    <div class="span6">
-        <h2>Performing commands</h2>
-        <h3>The command endpoint</h3>
-        <h4>Basics</h4>
-    </div>
-        <div class="span3">
-        <h5> GET </h5>
+    <div class="col-lg-6">
+        <h3>Advanced</h3>
+        <h4>Using another command handler</h4>
         <p>
-          <code>GET /cmd?q=<em>COMMAND</em></code>
-        </p>
-        </div>
-        <div class="span3">
-        <h5> POST </h5>
-        <p>
-          <code>POST /cmd {q: <em>COMMAND</em>}</code>
-        </p>
-        </div>
-    <div class="span6">
-        <h4>Effect</h4>
-        <p>
-          Will perform a command using <em>COMMAND</em>.<br />
-          The <code>COMMAND [%s]</code> directive will be inserted for you.<br />
-        </p>
-        <h4>Example</h4>
-    </div>
-      <div class="span3">
-          <h5> GET </h5>
-          <a href="/cmd?q=ENABLE_HOST_NOTIFICATIONS;devica01"> <code style="display:block">/cmd?q=<br/>ENABLE_HOST_NOTIFICATIONS;devica01</code></a><br/>
-      </div>
-      <div class="span3">
-          <h5> POST </h5>
-          <form action="/cmd" method="post">
-                  q: <input name="q" type="text" size="25" value="ENABLE_HOST_NOTIFICATIONS;devica01" />
-                  <input name="submit" type="submit" value="submit" />
-          </form>
-      </div>
-      <div class="span6">
-        <p>
-          Refer to the <a href="http://docs.icinga.org/latest/en/extcommands2.html"> list of external commands</a> for more information.
-        </p>
-        <h3>Using another command handler</h3>
           You can specify the <code>handler</code> argument to use a custom handler.<br/>
           <a href="/cmd?q=ENABLE_HOST_NOTIFICATIONS;devica01&handler=icinga" >Example: enable host notifications using the icinga handler</a><br/>
+        </p>
         <h4>Currently implemented handlers</h4>
           <p>
             <table border="1">
