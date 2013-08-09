@@ -90,8 +90,11 @@
         </h4>
         <p>
           By default you will receive a list of dictionaries, where each dictionary represent a row.
-          <a href="/query?q=GET%20hosts\nColumns:%20host_name%20notifications_enabled">Example : host_name and notifications_enabled</a><br/>
-          The example yields
+        </p>
+        <h4>Example</h4>
+        <p>
+          <a href="/query?q=GET%20hosts\nColumns:%20host_name%20notifications_enabled">Query host_name and notifications_enabled</a><br/>
+          This yields
           <pre class="prettyprint lang-yaml">
             [{
                 "notifications_enabled": "0",
@@ -118,12 +121,15 @@
           </pre>
         </p>
         <h4>
-          Custom output format
+          Key-grouped output format
         </h4>
         <p>
           If you specify the <code>key</code> parameter, this column name will be used as a unique index for the rows and you will have a dictionary of dictionaries instead.<br/>
-          <a href="/query?q=GET%20hosts\nColumns:%20host_name%20notifications_enabled&key=host_name">Example : host_name and notifications_enabled with host_name as key</a><br/>
-          The example yields <br/>
+        </p>
+        <h4>Example</h4>
+        <p>
+          <a href="/query?q=GET%20hosts\nColumns:%20host_name%20notifications_enabled&key=host_name">Query host_name and notifications_enabled with host_name as key</a><br/>
+          This yields <br/>
           <pre class="prettyprint lang-yaml">
             {
                 "devica01": {
@@ -164,9 +170,12 @@
         <h4>Using another command handler</h4>
         <p>
           You can specify the <code>handler</code> argument to use a custom handler.<br/>
-          <a href="/cmd?q=ENABLE_HOST_NOTIFICATIONS;devica01&handler=icinga" >Example: enable host notifications using the icinga handler</a><br/>
         </p>
-        <h4>Currently implemented handlers</h4>
+        <h4>Example</h4>
+        <p>
+          <a href="/cmd?q=ENABLE_HOST_NOTIFICATIONS;devica01&handler=icinga" >Enable host notifications using the icinga handler</a><br/>
+        </p>
+        <h4>Available handlers</h4>
           <p>
             <table border="1">
               <tr>
