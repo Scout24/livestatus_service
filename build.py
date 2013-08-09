@@ -51,14 +51,11 @@ license = "MIT"
 def initialize(project):
     project.port_to_run_on = "8080"
 
-
     project.build_depends_on("mockito")
     project.build_depends_on("mock")
 
-
     project.depends_on("flask")
     project.depends_on("simplejson")
-
 
     project.set_property('copy_resources_target', '$dir_dist')
     project.get_property('copy_resources_glob').append('setup.cfg')
@@ -67,7 +64,6 @@ def initialize(project):
     project.get_property("filter_resources_glob").append("**/livestatus_service/__init__.py")
     project.get_property("filter_resources_glob").append("**/livestatus_service/livestatus_service.conf")
 
-
     project.install_file('/var/www', 'livestatus_service/livestatus_service.wsgi')
     project.install_file('/etc/httpd/conf.d/', 'livestatus_service/livestatus_service.conf')
 
@@ -75,24 +71,23 @@ def initialize(project):
     project.set_property("coverage_threshold_warn", 85)
     project.set_property("coverage_break_build", False)
 
-
     project.set_property('distutils_classifiers', [
-      'Development Status :: 4 - Beta',
-      'Environment :: Web Environment',
-      'Intended Audience :: Developers',
-      'Intended Audience :: System Administrators',
-      'Programming Language :: Python',
-      'Natural Language :: English',
-      'Operating System :: POSIX :: Linux',
-      'Topic :: System :: Monitoring',
-      'Programming Language :: Python :: 2.6',
-      'Programming Language :: Python :: 2.7',
-      'Programming Language :: Python :: 3',
-      'License :: OSI Approved :: MIT License',
-      'Programming Language :: Python :: Implementation :: CPython',
-      'Programming Language :: Python :: Implementation :: Jython',
-      'Programming Language :: Python :: Implementation :: PyPy'
-      ])
+        'Development Status :: 4 - Beta',
+        'Environment :: Web Environment',
+        'Intended Audience :: Developers',
+        'Intended Audience :: System Administrators',
+        'Programming Language :: Python',
+        'Natural Language :: English',
+        'Operating System :: POSIX :: Linux',
+        'Topic :: System :: Monitoring',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: Implementation :: CPython',
+        'Programming Language :: Python :: Implementation :: Jython',
+        'Programming Language :: Python :: Implementation :: PyPy'
+    ])
 
 
 @init(environments='teamcity')
