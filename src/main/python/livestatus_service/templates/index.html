@@ -4,11 +4,38 @@
 {% block head %}
 {{ super() }}
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/css/bootstrap.min.css" rel="stylesheet">
+<script type="text/javascript" src="http://codeorigin.jquery.com/jquery-2.0.3.min.js"></script>
 {% endblock %}
 
 {% block content %}
 <a href="https://github.com/ImmobilienScout24/livestatus_service"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 <div class="container">
+
+<div class="navbar">
+        <div class="container">
+
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Livestatus-service</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li><a target=_new href="http://github.com/ImmobilienScout24/livestatus_service/issues/new">Submit an issue</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Useful links<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a target=_new href="http://github.com/ImmobilienScout24/livestatus_service">About</a></li>
+                  <li><a target=_new href="http://mathias-kettner.de/checkmk_livestatus.html">MK livestatus</a></li>
+                  <li><a target=_new href="http://docs.icinga.org/latest/en/extcommands2.html">External commands in icinga</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+</div>
+
   <div class="jumbotron">
     <h1>Livestatus-service</h1>
     <p class="lead">
@@ -201,12 +228,13 @@
 {% block footer %}
 <hr>
 <div id="footer">
-  <div class="container">
-  <p class="text-muted credit">
-    {{ super() }}
-  </p>
-  </div>
+<div class="container">
+          <p class="text-muted credit">
+            {{ super() }}
+          </p>
 </div>
+</div>
+
 
 <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.1.1/js/bootstrap.min.js"></script>
 {% endblock %}
