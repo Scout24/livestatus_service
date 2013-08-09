@@ -81,4 +81,3 @@ def _wait_for(expression_to_be_true, max_waiting_seconds=MAX_WAITING_SECONDS, in
         waited_seconds += interval_seconds
 
     return succeeded
-
