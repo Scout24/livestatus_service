@@ -46,11 +46,11 @@ class WebappTests(unittest.TestCase):
 
     def test_should_use_dispatch_function(self):
         result = dispatch_request('foobar', lambda x: 'replaced')
-        self.assertEquals(result, ('replaced\n', 200))
+        self.assertEqual(result, ('replaced\n', 200))
 
     def test_should_replace_new_lines_in_requests(self):
         result = validate_query('foo\\nbar\\nbuzz')
-        self.assertEquals(result, 'foo\nbar\nbuzz')
+        self.assertEqual(result, 'foo\nbar\nbuzz')
 
     def test_should_respond_with_error_when_uncaught_exception_occurs(self):
         mock_request = mock()
@@ -60,7 +60,7 @@ class WebappTests(unittest.TestCase):
 
         response = validate_and_dispatch(mock_request, lambda x: None)
 
-        self.assertEquals(response, ('Error : too fat to fly', 200))
+        self.assertEqual(response, ('Error : too fat to fly', 200))
 
     def test_should_raise_exception_when_query_is_missing(self):
         self.assertRaises(BaseException, validate_query, None)
@@ -85,31 +85,31 @@ class WebappTests(unittest.TestCase):
 
         result = validate_and_dispatch(mock_request, 'noodles')
 
-        self.assertEquals(result, 'foobarnoodlesbaconspam')
+        self.assertEqual(result, 'foobarnoodlesbaconspam')
 
     @patch('livestatus_service.webapp.render_application_template')
     def test_handle_index_should_render_the_index_template(self, mock_render):
         handle_index()
 
-        self.assertEquals(mock_render.call_args, call('index.html'))
+        self.assertEqual(mock_render.call_args, call('index.html'))
 
     @patch('livestatus_service.webapp.render_template')
     def test_render_app_template_should_render_template_with_version(self, mock_render):
         render_application_template('index.html')
 
-        self.assertEquals(mock_render.call_args, call('index.html',
+        self.assertEqual(mock_render.call_args, call('index.html',
                                                       version=livestatus_service.__version__))
 
     @patch('livestatus_service.webapp.validate_and_dispatch')
     def test_handle_command_should_dispatch_with_perform_command(self, mock_dispatch):
         handle_command()
 
-        self.assertEquals(mock_dispatch.call_args, call(livestatus_service.webapp.request,
+        self.assertEqual(mock_dispatch.call_args, call(livestatus_service.webapp.request,
                                                         livestatus_service.webapp.perform_command))
 
     @patch('livestatus_service.webapp.validate_and_dispatch')
     def test_handle_query_should_dispatch_with_perform_query(self, mock_dispatch):
         handle_query()
 
-        self.assertEquals(mock_dispatch.call_args, call(livestatus_service.webapp.request,
+        self.assertEqual(mock_dispatch.call_args, call(livestatus_service.webapp.request,
                                                         livestatus_service.webapp.perform_query))

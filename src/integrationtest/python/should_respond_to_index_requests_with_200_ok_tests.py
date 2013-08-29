@@ -37,7 +37,7 @@ class Test(unittest.TestCase):
     def test(self):
         with LiveServer() as liveserver:
             response = urlopen(liveserver.url)
-            self.assertEquals(response.code, 200)
+            self.assertEqual(response.code, 200)
 
 
 if __name__ == '__main__':

@@ -69,42 +69,42 @@ class ConfigurationTests(unittest.TestCase):
             configuration_file.write(b"[livestatus-service]\n")
             configuration_file.flush()
             config = Configuration(configuration_file.name)
-            self.assertEquals(config.log_file, Configuration.DEFAULT_LOG_FILE)
+            self.assertEqual(config.log_file, Configuration.DEFAULT_LOG_FILE)
 
     def test_should_return_given_log_file_when_log_file_option_is_given(self):
         with tempfile.NamedTemporaryFile() as configuration_file:
             configuration_file.write(b"[livestatus-service]\nlog_file=spam.log")
             configuration_file.flush()
             config = Configuration(configuration_file.name)
-            self.assertEquals(config.log_file, "spam.log")
+            self.assertEqual(config.log_file, "spam.log")
 
     def test_should_return_default_livestatus_socket(self):
         with tempfile.NamedTemporaryFile() as configuration_file:
             configuration_file.write(b"[livestatus-service]\n")
             configuration_file.flush()
             config = Configuration(configuration_file.name)
-            self.assertEquals(config.livestatus_socket, Configuration.DEFAULT_LIVESTATUS_SOCKET)
+            self.assertEqual(config.livestatus_socket, Configuration.DEFAULT_LIVESTATUS_SOCKET)
 
     def test_should_return_configured_livestatus_socket(self):
         with tempfile.NamedTemporaryFile() as configuration_file:
             configuration_file.write(b"[livestatus-service]\nlivestatus_socket=foo/bar")
             configuration_file.flush()
             config = Configuration(configuration_file.name)
-            self.assertEquals(config.livestatus_socket, "foo/bar")
+            self.assertEqual(config.livestatus_socket, "foo/bar")
 
     def test_should_return_default_icinga_command_file(self):
         with tempfile.NamedTemporaryFile() as configuration_file:
             configuration_file.write(b"[livestatus-service]\n")
             configuration_file.flush()
             config = Configuration(configuration_file.name)
-            self.assertEquals(config.icinga_command_file, Configuration.DEFAULT_ICINGA_COMMAND_FILE)
+            self.assertEqual(config.icinga_command_file, Configuration.DEFAULT_ICINGA_COMMAND_FILE)
 
     def test_should_return_configured_icinga_command_file(self):
         with tempfile.NamedTemporaryFile() as configuration_file:
             configuration_file.write(b"[livestatus-service]\nicinga_command_file=foo/bar.cmd")
             configuration_file.flush()
             config = Configuration(configuration_file.name)
-            self.assertEquals(config.icinga_command_file, "foo/bar.cmd")
+            self.assertEqual(config.icinga_command_file, "foo/bar.cmd")
 
 
 class ConfigurationLoadingTests(unittest.TestCase):
