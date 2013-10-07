@@ -27,7 +27,7 @@ import simplejson as json
 import logging
 import socket
 import time
-
+import os
 '''
     Wraps the livestatus UNIX socket to expose it to python code. Provides abstract
     access to the socket and formatting functions to deal with the livestatus
@@ -47,6 +47,10 @@ class LivestatusSocket(object):
     def __init__(self, socket_path):
         self.socket_path = socket_path
         self.connected = False
+        if not os.path.exists(socket_path):
+            raise RuntimeError(
+                ('Could not connect to livestatus socket at {0}, ' +
+                 'perhaps icinga is not running or mk-livestatus is not installed?').format(socket_path))
 
     def _connect(self):
         self._socket = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
@@ -115,10 +119,12 @@ def format_answer(query, answer, key_to_use):
         if len(answer) <= 1:
             message = 'Cannot format answer {0}, either the column definitions or the contents are missing'
             raise ValueError(message.format(answer))
-        answer = answer[1:]  # first element is a list with column names, remove it
+        # first element is a list with column names, remove it
+        answer = answer[1:]
 
     if key_to_use is not None and not key_to_use in columns_to_show:
-        raise RuntimeError('Cannot use %s as key since it is not a column in the result' % key_to_use)
+        raise RuntimeError(
+            'Cannot use %s as key since it is not a column in the result' % key_to_use)
 
     if key_to_use is None:
         return _list_of_rows(answer, columns_to_show)
@@ -142,7 +148,8 @@ def determine_columns_to_show_from_answer(answer):
 def _list_of_rows(answer, columns_to_show):
     formatted_answer = []
     for row in answer:
-        formatted_row = _map_columns_to_show_with_one_row_of_actual_values(columns_to_show, row)
+        formatted_row = _map_columns_to_show_with_one_row_of_actual_values(
+            columns_to_show, row)
         formatted_answer.append(formatted_row)
     return formatted_answer
 
@@ -150,9 +157,11 @@ def _list_of_rows(answer, columns_to_show):
 def _dictionary_of_rows(answer, columns_to_show, key_to_use):
     formatted_answer = {}
     for row in answer:
-        formatted_row = _map_columns_to_show_with_one_row_of_actual_values(columns_to_show, row)
+        formatted_row = _map_columns_to_show_with_one_row_of_actual_values(
+            columns_to_show, row)
         if key_to_use not in formatted_row:
-            LOGGER.warn('Skipping row {0} because the key {1} is missing'.format(formatted_row, key_to_use))
+            LOGGER.warn('Skipping row {0} because the key {1} is missing'.format(
+                formatted_row, key_to_use))
             continue
         formatted_answer[str(formatted_row[key_to_use])] = formatted_row
     return formatted_answer
