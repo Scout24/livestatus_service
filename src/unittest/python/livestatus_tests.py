@@ -43,7 +43,7 @@ class LivestatusTests(unittest.TestCase):
     def test_should_crash_with_appropriate_error_message_when_socket_not_available(self):
         try:
             LivestatusSocket('this-path-does-not-exist')
-        except RuntimeError, expected_exception:
+        except RuntimeError as expected_exception:
             self.assertEqual(expected_exception.message, 'Could not connect to livestatus socket at this-path-does-not-exist, perhaps icinga is not running or mk-livestatus is not installed?')
         else:
             self.fail('Socket instantiation with wrong path should throw an error')
