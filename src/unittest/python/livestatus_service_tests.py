@@ -38,13 +38,14 @@ class LivestatusServiceInitializationTests(unittest.TestCase):
         config_properties.log_file = '/foo/bar/baz.log'
         mock_config.return_value = config_properties
 
-
         livestatus_service.initialize('/foo/bar/config.cfg')
 
-        self.assertEqual(mock_initialize_logging.call_args, call(config_properties.log_file))
+        self.assertEqual(
+            mock_initialize_logging.call_args, call(config_properties.log_file))
 
     @patch('livestatus_service.logging.FileHandler')
     def test_initialize_logging_should_create_log_file_handler(self, mock_file_handler):
         initialize_logging('/path/to/log/file')
 
-        self.assertEqual(mock_file_handler.call_args, call('/path/to/log/file'))
+        self.assertEqual(
+            mock_file_handler.call_args, call('/path/to/log/file'))

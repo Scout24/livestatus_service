@@ -38,7 +38,8 @@ from livestatus_service.livestatus import (perform_query,
 class LivestatusTests(unittest.TestCase):
 
     def setUp(self):
-        self.path_patcher = patch('livestatus_service.livestatus.os.path.exists')
+        self.path_patcher = patch(
+            'livestatus_service.livestatus.os.path.exists')
         self.path = self.path_patcher.start()
         self.path.return_value = True
 
@@ -51,9 +52,11 @@ class LivestatusTests(unittest.TestCase):
         try:
             LivestatusSocket('this-path-does-not-exist')
         except RuntimeError as expected_exception:
-            self.assertEqual(str(expected_exception), 'Could not connect to livestatus socket at this-path-does-not-exist, perhaps icinga is not running or mk-livestatus is not installed?')
+            self.assertEqual(
+                str(expected_exception), 'Could not connect to livestatus socket at this-path-does-not-exist, perhaps icinga is not running or mk-livestatus is not installed?')
         else:
-            self.fail('Socket instantiation with wrong path should throw an error')
+            self.fail(
+                'Socket instantiation with wrong path should throw an error')
 
     @patch('livestatus_service.livestatus.format_answer')
     @patch('livestatus_service.livestatus.socket.socket')
@@ -71,7 +74,8 @@ class LivestatusTests(unittest.TestCase):
 
         perform_query('test', '/path/to/socket')
 
-        mock_socket.return_value.send.assert_called_with(b'test\nOutputFormat: json\n')
+        mock_socket.return_value.send.assert_called_with(
+            b'test\nOutputFormat: json\n')
 
     @patch('livestatus_service.livestatus.format_answer')
     @patch('livestatus_service.livestatus.socket.socket')
@@ -90,13 +94,15 @@ class LivestatusTests(unittest.TestCase):
 
         perform_command('foobar', '/path/to/socket')
 
-        mock_socket.return_value.send.assert_called_with(b'COMMAND [123] foobar\n')
+        mock_socket.return_value.send.assert_called_with(
+            b'COMMAND [123] foobar\n')
 
 
 class LivestatusAnswerParsingTests(unittest.TestCase):
 
     def setUp(self):
-        self.logger_patcher = patch('livestatus_service.livestatus.LOGGER.warn')
+        self.logger_patcher = patch(
+            'livestatus_service.livestatus.LOGGER.warn')
         self.logger_patcher.start()
 
     def tearDown(self):
