@@ -153,8 +153,62 @@ Columns: host_name notifications_enabled''', [["devica01", 1], ["tuvdbs05", 1], 
             'host_name')
         self.assertEqual(
             answer, {
-                'devica01': {'acknowledgement_type': 0, 'notifications_enabled': 1, 'acknowledged': 0, 'action_url': '', 'accept_passive_checks': 1, 'host_name': 'devica01'}, 'tuvrep01': {'acknowledgement_type': 0, 'notifications_enabled': 1, 'acknowledged': 0, 'action_url': '', 'accept_passive_checks': 1, 'host_name': 'tuvrep01'}, 'tuvdbs06': {'acknowledgement_type': 0, 'notifications_enabled': 1, 'acknowledged': 0, 'action_url': '', 'accept_passive_checks': 1, 'host_name': 'tuvdbs06'}, 'tuvdbs05': {'acknowledgement_type': 0, 'notifications_enabled': 1,
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          'acknowledged': 0, 'action_url': '', 'accept_passive_checks': 1, 'host_name': 'tuvdbs05'}, 'tuvdbs50': {'acknowledgement_type': 0, 'notifications_enabled': 1, 'acknowledged': 0, 'action_url': '', 'accept_passive_checks': 1, 'host_name': 'tuvdbs50'}, 'tuvmpc01': {'acknowledgement_type': 0, 'notifications_enabled': 1, 'acknowledged': 0, 'action_url': '', 'accept_passive_checks': 1, 'host_name': 'tuvmpc01'}, 'tuvmpc02': {'acknowledgement_type': 0, 'notifications_enabled': 1, 'acknowledged': 0, 'action_url': '', 'accept_passive_checks': 1, 'host_name': 'tuvmpc02'}})
+                'devica01': {
+                    'acknowledgement_type': 0,
+                    'notifications_enabled': 1,
+                    'acknowledged': 0,
+                    'action_url': '',
+                    'accept_passive_checks': 1,
+                    'host_name': 'devica01'
+                },
+                'tuvrep01': {
+                    'acknowledgement_type': 0,
+                    'notifications_enabled': 1,
+                    'acknowledged': 0,
+                    'action_url': '',
+                    'accept_passive_checks': 1,
+                    'host_name': 'tuvrep01'
+                },
+                'tuvdbs06': {
+                    'acknowledgement_type': 0,
+                    'notifications_enabled': 1,
+                    'acknowledged': 0,
+                    'action_url': '',
+                    'accept_passive_checks': 1,
+                    'host_name': 'tuvdbs06'
+                },
+                'tuvdbs05': {
+                    'acknowledgement_type': 0,
+                    'notifications_enabled': 1,
+                    'acknowledged': 0,
+                    'action_url': '',
+                    'accept_passive_checks': 1,
+                    'host_name': 'tuvdbs05'
+                },
+                'tuvdbs50': {
+                    'acknowledgement_type': 0,
+                    'notifications_enabled': 1,
+                    'acknowledged': 0,
+                    'action_url': '',
+                    'accept_passive_checks': 1,
+                    'host_name': 'tuvdbs50'
+                },
+                'tuvmpc01': {
+                    'acknowledgement_type': 0,
+                    'notifications_enabled': 1,
+                    'acknowledged': 0,
+                    'action_url': '',
+                    'accept_passive_checks': 1,
+                    'host_name': 'tuvmpc01'
+                },
+                'tuvmpc02': {
+                    'acknowledgement_type': 0,
+                    'notifications_enabled': 1,
+                    'acknowledged': 0,
+                    'action_url': '',
+                    'accept_passive_checks': 1,
+                    'host_name': 'tuvmpc02'
+                }})
 
     def test_should_parse_two_columns(self):
         answer = format_answer(
