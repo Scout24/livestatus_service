@@ -25,7 +25,6 @@ THE SOFTWARE.
 from mock import patch, Mock
 import unittest
 
-import livestatus_service
 from livestatus_service.dispatcher import perform_command, perform_query
 
 
