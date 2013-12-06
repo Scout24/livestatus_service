@@ -4,8 +4,9 @@ python:
   - "2.7"
   - "3.3"
   - "pypy"
-before_script: sudo apt-get install pychecker pylint pep8 rpm python-rpm && pip install --upgrade distribute
+before_script: sudo apt-get install pychecker pylint pep8 rpm python-rpm
 install:
+  - pip install --upgrade distribute
   - sudo rm -rf /dev/shm && sudo ln -s /run/shm /dev/shm # see https://github.com/travis-ci/travis-cookbooks/issues/155
   - pip install pybuilder --use-mirrors
   - pip install coveralls
