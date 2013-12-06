@@ -22,8 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 '''
 
-from mock import patch, call
-from mockito import when, unstub, any as any_value, mock
+from mock import patch, Mock
 import unittest
 
 import livestatus_service
@@ -38,11 +37,12 @@ from livestatus_service.webapp import (validate_and_dispatch,
 
 class WebappTests(unittest.TestCase):
 
-    def tearDown(self):
-        unstub()
-
     def setUp(self):
-        when(livestatus_service.webapp.LOGGER).error(any_value()).thenReturn(None)
+        self.logger_patcher = patch('livestatus_service.webapp.LOGGER.error')
+        self.logger_patcher.start()
+
+    def tearDown(self):
+        self.logger_patcher.stop()
 
     def test_should_use_dispatch_function(self):
         result = dispatch_request('foobar', lambda x: 'replaced')
@@ -53,10 +53,8 @@ class WebappTests(unittest.TestCase):
         self.assertEqual(result, 'foo\nbar\nbuzz')
 
     def test_should_respond_with_error_when_uncaught_exception_occurs(self):
-        mock_request = mock()
-        mock_args = mock()
-        mock_request.args = mock_args
-        when(mock_args).get(any_value()).thenRaise(ValueError('too fat to fly'))
+        mock_request = Mock()
+        mock_request.args.get.side_effect = ValueError('too fat to fly')
 
         response = validate_and_dispatch(mock_request, lambda x: None)
 
@@ -66,10 +64,12 @@ class WebappTests(unittest.TestCase):
         self.assertRaises(BaseException, validate_query, None)
 
     def test_should_raise_exception_when_query_specifies_an_outputformat(self):
-        self.assertRaises(BaseException, validate_query, 'foo\nOutputFormat: json\nbar')
+        self.assertRaises(
+            BaseException, validate_query, 'foo\nOutputFormat: json\nbar')
 
-    def test_should_return_error_when_exception_is_raised(self):
-        mock_request = mock()
+    @patch('livestatus_service.webapp.dispatch_request')
+    def test_should_return_error_when_exception_is_raised(self, dispatch_request):
+        mock_request = Mock()
         mock_args = {'q': 'foobar',
                      'handler': 'spam',
                      'key': 'bacon'}
@@ -81,7 +81,7 @@ class WebappTests(unittest.TestCase):
                             kwargs['key'] +
                             kwargs['handler'])
 
-        livestatus_service.webapp.dispatch_request = concatenate_args
+        dispatch_request.side_effect = concatenate_args
 
         result = validate_and_dispatch(mock_request, 'noodles')
 
@@ -91,25 +91,25 @@ class WebappTests(unittest.TestCase):
     def test_handle_index_should_render_the_index_template(self, mock_render):
         handle_index()
 
-        self.assertEqual(mock_render.call_args, call('index.html'))
+        mock_render.assert_called_with('index.html')
 
     @patch('livestatus_service.webapp.render_template')
     def test_render_app_template_should_render_template_with_version(self, mock_render):
         render_application_template('index.html')
 
-        self.assertEqual(mock_render.call_args, call('index.html',
-                                                      version=livestatus_service.__version__))
+        mock_render.assert_called_with(
+            'index.html', version=livestatus_service.__version__)
 
     @patch('livestatus_service.webapp.validate_and_dispatch')
     def test_handle_command_should_dispatch_with_perform_command(self, mock_dispatch):
         handle_command()
 
-        self.assertEqual(mock_dispatch.call_args, call(livestatus_service.webapp.request,
-                                                        livestatus_service.webapp.perform_command))
+        mock_dispatch.assert_called_with(livestatus_service.webapp.request,
+                                         livestatus_service.webapp.perform_command)
 
     @patch('livestatus_service.webapp.validate_and_dispatch')
     def test_handle_query_should_dispatch_with_perform_query(self, mock_dispatch):
         handle_query()
 
-        self.assertEqual(mock_dispatch.call_args, call(livestatus_service.webapp.request,
-                                                        livestatus_service.webapp.perform_query))
+        mock_dispatch.assert_called_with(livestatus_service.webapp.request,
+                                         livestatus_service.webapp.perform_query)

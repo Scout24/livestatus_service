@@ -51,7 +51,6 @@ license = "MIT"
 def initialize(project):
     project.port_to_run_on = "8080"
 
-    project.build_depends_on("mockito")
     project.build_depends_on("mock")
 
     project.depends_on("flask")

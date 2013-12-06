@@ -23,7 +23,7 @@ THE SOFTWARE.
 '''
 
 from __future__ import absolute_import
-from mockito import mock, when, verify, unstub, any as any_value
+from mock import patch
 import unittest
 
 import livestatus_service
@@ -37,10 +37,17 @@ from livestatus_service.livestatus import (perform_query,
 
 class LivestatusTests(unittest.TestCase):
 
+    def setUp(self):
+        self.path_patcher = patch('livestatus_service.livestatus.os.path.exists')
+        self.path = self.path_patcher.start()
+        self.path.return_value = True
+
     def tearDown(self):
-        unstub()
+        self.path_patcher.stop()
 
     def test_should_crash_with_appropriate_error_message_when_socket_not_available(self):
+        self.path.return_value = False
+
         try:
             LivestatusSocket('this-path-does-not-exist')
         except RuntimeError as expected_exception:
@@ -48,66 +55,51 @@ class LivestatusTests(unittest.TestCase):
         else:
             self.fail('Socket instantiation with wrong path should throw an error')
 
-    def test_should_read_query_answer_fully(self):
-        mock_socket = mock()
-        when(livestatus_service.livestatus.os.path).exists(any_value()).thenReturn(True)
-        when(mock_socket).recv(any_value()).thenReturn(b'{}').thenReturn(None)
-        when(livestatus_service.livestatus.socket).socket(
-            any_value(), any_value()).thenReturn(mock_socket)
-        when(livestatus_service.livestatus).format_answer(
-            any_value(), any_value(), any_value()).thenReturn(None)
-        livestatus_service.livestatus.format_answer = lambda _, x, __: x
+    @patch('livestatus_service.livestatus.format_answer')
+    @patch('livestatus_service.livestatus.socket.socket')
+    def test_should_read_query_answer_fully(self, mock_socket, format_answer):
+        mock_socket.return_value.recv.side_effect = [b'{}', None]
+        format_answer.side_effect = lambda _, x, __: x
 
         self.assertEqual(perform_query('test', '/path/to/socket'), '{}')
 
-    def test_should_write_query_to_socket(self):
-        livestatus_service.livestatus.format_answer = lambda _, x, __: x
-
-        mock_socket = mock()
-        when(livestatus_service.livestatus.os.path).exists(any_value()).thenReturn(True)
-        when(mock_socket).recv(any_value()).thenReturn(b'{}').thenReturn(None)
-        when(livestatus_service.livestatus.socket).socket(
-            any_value(), any_value()).thenReturn(mock_socket)
-        when(livestatus_service.livestatus).format_answer(
-            any_value(), any_value(), any_value()).thenReturn(None)
+    @patch('livestatus_service.livestatus.format_answer')
+    @patch('livestatus_service.livestatus.socket.socket')
+    def test_should_write_query_to_socket(self, mock_socket, format_answer):
+        mock_socket.return_value.recv.side_effect = [b'{}', None]
+        format_answer.side_effect = lambda _, x, __: x
 
         perform_query('test', '/path/to/socket')
 
-        verify(mock_socket).send(b'test\nOutputFormat: json\n')
+        mock_socket.return_value.send.assert_called_with(b'test\nOutputFormat: json\n')
 
-    def test_should_open_configured_socket(self):
-        mock_socket = mock()
-        when(livestatus_service.livestatus.os.path).exists(any_value()).thenReturn(True)
-        when(mock_socket).recv(any_value()).thenReturn(b'{}').thenReturn(None)
-        when(livestatus_service.livestatus.socket).socket(
-            any_value(), any_value()).thenReturn(mock_socket)
-        when(livestatus_service.livestatus).format_answer(
-            any_value(), any_value(), any_value()).thenReturn(None)
+    @patch('livestatus_service.livestatus.format_answer')
+    @patch('livestatus_service.livestatus.socket.socket')
+    def test_should_open_configured_socket(self, mock_socket, format_answer):
+        mock_socket.return_value.recv.side_effect = [b'{}', None]
 
         livestatus_service.livestatus.perform_query('test', '/path/to/socket')
 
-        verify(mock_socket).connect('/path/to/socket')
+        mock_socket.return_value.connect.assert_called_with('/path/to/socket')
 
-    def test_should_perform_command_and_receive_ok(self):
-        mock_socket = mock()
-        when(livestatus_service.livestatus.os.path).exists(any_value()).thenReturn(True)
-        when(livestatus_service.livestatus.time).time().thenReturn(123)
-        when(livestatus_service.livestatus.socket).socket(
-            any_value(), any_value()).thenReturn(mock_socket)
+    @patch('livestatus_service.livestatus.time.time')
+    @patch('livestatus_service.livestatus.socket.socket')
+    def test_should_perform_command_and_receive_ok(self, mock_socket, time):
+        time.return_value = 123
 
         perform_command('foobar', '/path/to/socket')
 
-        verify(mock_socket).send(b'COMMAND [123] foobar\n')
+        mock_socket.return_value.send.assert_called_with(b'COMMAND [123] foobar\n')
 
 
 class LivestatusAnswerParsingTests(unittest.TestCase):
 
     def setUp(self):
-        when(livestatus_service.livestatus.LOGGER).warn(
-            any_value()).thenReturn(None)
+        self.logger_patcher = patch('livestatus_service.livestatus.LOGGER.warn')
+        self.logger_patcher.start()
 
     def tearDown(self):
-        unstub()
+        self.logger_patcher.stop()
 
     def test_should_parse_query_with_two_columns(self):
         answer = format_answer('''
