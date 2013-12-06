@@ -77,6 +77,7 @@ class LivestatusTests(unittest.TestCase):
     @patch('livestatus_service.livestatus.socket.socket')
     def test_should_open_configured_socket(self, mock_socket, format_answer):
         mock_socket.return_value.recv.side_effect = [b'{}', None]
+        format_answer.side_effect = lambda _, x, __: x
 
         livestatus_service.livestatus.perform_query('test', '/path/to/socket')
 
