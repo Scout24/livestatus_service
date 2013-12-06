@@ -112,8 +112,35 @@ class LivestatusAnswerParsingTests(unittest.TestCase):
         answer = format_answer('''
 GET hosts
 Columns: host_name notifications_enabled''', [["devica01", 1], ["tuvdbs05", 1], ["tuvdbs06", 1], ["tuvdbs50", 1], ["tuvmpc01", 1], ["tuvmpc02", 1], ["tuvrep01", 1]], 'host_name')
-        self.assertEqual(answer, {'devica01': {'notifications_enabled': 1, 'host_name': 'devica01'}, 'tuvrep01': {'notifications_enabled': 1, 'host_name': 'tuvrep01'}, 'tuvdbs06': {'notifications_enabled': 1, 'host_name': 'tuvdbs06'}, 'tuvdbs05': {
-                         'notifications_enabled': 1, 'host_name': 'tuvdbs05'}, 'tuvdbs50': {'notifications_enabled': 1, 'host_name': 'tuvdbs50'}, 'tuvmpc01': {'notifications_enabled': 1, 'host_name': 'tuvmpc01'}, 'tuvmpc02': {'notifications_enabled': 1, 'host_name': 'tuvmpc02'}})
+        self.assertEqual(answer, {
+            'devica01': {
+                'notifications_enabled': 1,
+                'host_name': 'devica01'
+            },
+            'tuvrep01': {
+                'notifications_enabled': 1,
+                'host_name': 'tuvrep01'
+            },
+            'tuvdbs06': {
+                'notifications_enabled': 1,
+                'host_name': 'tuvdbs06'
+            },
+            'tuvdbs05': {
+                'notifications_enabled': 1,
+                'host_name': 'tuvdbs05'
+            },
+            'tuvdbs50': {
+                'notifications_enabled': 1,
+                'host_name': 'tuvdbs50'
+            },
+            'tuvmpc01': {
+                'notifications_enabled': 1,
+                'host_name': 'tuvmpc01'
+            },
+            'tuvmpc02': {
+                'notifications_enabled': 1,
+                'host_name': 'tuvmpc02'
+            }})
 
     def test_should_raise_exception_when_key_is_not_in_queried_columns(self):
         self.assertRaises(RuntimeError, format_answer, 'GET hosts\nColumns: host_name notifications_enabled', [
