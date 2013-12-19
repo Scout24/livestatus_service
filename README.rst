@@ -10,13 +10,9 @@ livestatus-service
    :align: left
    :target: https://travis-ci.org/ImmobilienScout24/livestatus_service
 
-.. image:: https://pypip.in/v/livestatus-service/badge.png
-    :target: https://crate.io/packages/livestatus-service/
+.. image:: http://badge.fury.io/py/livestatus_service.png
+    :target: http://badge.fury.io/py/livestatus_service
     :alt: Latest PyPI version
-
-.. image:: https://pypip.in/d/livestatus-service/badge.png
-    :target: https://crate.io/packages/livestatus-service/
-    :alt: Number of PyPI downloads
 
 Background
 ----------
