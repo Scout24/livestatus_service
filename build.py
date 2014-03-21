@@ -98,7 +98,7 @@ def set_properties_for_teamcity_builds(project):
     import os
 
     project.version = '%s-%s' % (project.version, os.environ.get('BUILD_NUMBER', 0))
-    project.default_task = ['install_dependencies', 'package']
+    project.default_task = ['install_dependencies', 'package', 'verify']
     project.set_property('install_dependencies_use_mirrors', False)
     project.get_property('distutils_commands').append('bdist_rpm')
     project.set_property('teamcity_output', True)
