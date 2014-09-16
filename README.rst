@@ -66,7 +66,9 @@ Afterwards, building and packaging can be done with
 
 ::
 
-    source venv/bin/activate pyb cd target/dist/livestatus-service-$VERSION
+    source venv/bin/activate
+    pyb
+    cd target/dist/livestatus-service-$VERSION
     python setup.py bdist_rpm
 
 Running
