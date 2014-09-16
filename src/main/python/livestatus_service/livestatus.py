@@ -122,7 +122,7 @@ def format_answer(query, answer, key_to_use):
         # first element is a list with column names, remove it
         answer = answer[1:]
 
-    if key_to_use is not None and not key_to_use in columns_to_show:
+    if key_to_use is not None and key_to_use not in columns_to_show:
         raise RuntimeError(
             'Cannot use %s as key since it is not a column in the result' % key_to_use)
 
