@@ -58,7 +58,7 @@ class IcingaTests(unittest.TestCase):
         mock_open.return_value = MagicMock(spec=file)
         mock_time.return_value = '123'
 
-        perform_command('FOO;bär', '/path/to/commandfile.cmd')
+        perform_command(u'FOO;bär', '/path/to/commandfile.cmd')
 
         mock_file = mock_open.return_value.__enter__.return_value
         mock_file.write.assert_called_with(b'[123] FOO;bär\n')
