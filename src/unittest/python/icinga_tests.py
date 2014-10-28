@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 '''
 The MIT License (MIT)
 
@@ -21,6 +23,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 '''
+
 
 from __future__ import absolute_import
 from mock import patch, MagicMock, call
@@ -48,3 +51,14 @@ class IcingaTests(unittest.TestCase):
         self.assertEqual(mock_open.call_args, call('/path/to/commandfile.cmd', 'w'))
         mock_file = mock_open.return_value.__enter__.return_value
         mock_file.write.assert_called_with(b'[123] FOO;bar\n')
+
+    @patch('livestatus_service.icinga.open', create=True)
+    @patch('livestatus_service.icinga.time.time')
+    def test_should_write_utf8_command_to_named_pipe(self, mock_time, mock_open):
+        mock_open.return_value = MagicMock(spec=file)
+        mock_time.return_value = '123'
+
+        perform_command('FOO;bär', '/path/to/commandfile.cmd')
+
+        mock_file = mock_open.return_value.__enter__.return_value
+        mock_file.write.assert_called_with(b'[123] FOO;bär\n')
