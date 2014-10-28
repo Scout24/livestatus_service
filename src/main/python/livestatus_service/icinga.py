@@ -46,6 +46,8 @@ class IcingaCommandFile(object):
         self.command_file_path = command_file_path
 
     def send_command(self, command):
+        command = command.decode("utf-8")
         with open(self.command_file_path, 'w') as command_file:
             timestamp = str(int(time.time()))
-            command_file.write('[{0}] {1}\n'.format(timestamp, command).encode('utf-8'))
+            command_with_timestamp = u'[{0}] {1}\n'.format(timestamp, command)
+            command_file.write(command_with_timestamp.encode("utf-8"))
