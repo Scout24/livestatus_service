@@ -56,6 +56,8 @@ def initialize(project):
     project.depends_on("flask")
     project.depends_on("simplejson")
 
+    project.set_property("verbose", True)
+
     project.set_property('copy_resources_target', '$dir_dist')
     project.get_property('copy_resources_glob').append('setup.cfg')
     project.get_property('copy_resources_glob').append('README')
