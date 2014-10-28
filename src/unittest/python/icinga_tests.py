@@ -29,7 +29,7 @@ import unittest
 try:
     import io
     file = io.IOBase  # file is IOBase in python3
-except:
+except ImportError:
     pass
 
 from livestatus_service.icinga import perform_command
