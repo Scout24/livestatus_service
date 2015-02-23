@@ -11,6 +11,6 @@ install:
   - pip install pybuilder --use-mirrors
   - pip install coveralls
   - pyb --debug install_dependencies
-script: "pyb --debug -v verify && coverage run --source=src/main/python/livestatus_service `which pyb` run_unit_tests"
+script: "pyb"
 after_success:
   - coveralls --verbose
