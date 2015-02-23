@@ -58,8 +58,9 @@ class Test(unittest.TestCase):
         mock_configuration = PropertyMock()
         mock_configuration.livestatus_socket = './livestatus_socket'
         get_config.return_value = mock_configuration
+        socket_response = '[["host_name","notifications_enabled"],["devica01", 1], ["tuvdbs05",1], ["tuvdbs06",1]]'
+
         with LiveServer() as liveserver:
-            socket_response = '[["host_name","notifications_enabled"],["devica01", 1], ["tuvdbs05",1], ["tuvdbs06",1]]'
             with LiveSocket('./livestatus_socket', socket_response) as livesocket:
                 api_call_result = urlopen('{0}query?q=GET%20hosts'.format(liveserver.url))
                 actual_result = json.loads(api_call_result.read().decode('utf-8'))
