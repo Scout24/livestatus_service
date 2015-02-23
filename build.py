@@ -64,7 +64,7 @@ def initialize(project):
 
     project.set_property('flake8_include_test_sources', True)
     project.set_property('flake8_break_build', True)
-    project.set_property('flake8_ignore', "E501")
+    project.set_property('flake8_ignore', "E501,E731")
 
     project.get_property("filter_resources_glob").append("**/livestatus_service/__init__.py")
     project.get_property("filter_resources_glob").append("**/livestatus_service/livestatus_service.conf")
