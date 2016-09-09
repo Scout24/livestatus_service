@@ -108,7 +108,7 @@ def perform_command(command, socket_path, key=None):
 def format_answer(query, answer, key_to_use):
     """
     Answers come in two different types :
-     - Columns were specified in the LQL, so the query must be parsed
+     - Columns and / or Stats were specified in the LQL, so the query must be parsed
      - Columns were not specified, they are then the first line in the result,
        so the answer must be parsed
     """
@@ -133,10 +133,16 @@ def format_answer(query, answer, key_to_use):
 
 
 def determine_columns_to_show_from_query(query):
+    columns_to_show=[]
     for query_line in query.splitlines():
         if 'Columns:' in query_line:
             columns_to_show = query_line.split('Columns:')[1].split()
-            return columns_to_show
+    for query_line in query.splitlines():
+        if 'Stats:' in query_line:
+            stats_header = query_line.split('Stats: ')[1]
+            columns_to_show.append(stats_header)
+    if len(columns_to_show) > 0:
+        return columns_to_show
     raise NoColumnsSpecifiedException()
 
 
