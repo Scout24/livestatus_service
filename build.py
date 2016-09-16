@@ -39,7 +39,7 @@ use_plugin("python.install_dependencies")
 default_task = ["analyze", "publish"]
 
 name = "livestatus-service"
-version = "0.3.4"
+version = "0.3.5"
 summary = "Exposes MK livestatus to the outside world over HTTP"
 authors = (Author("Marcel Wolf", "marcel.wolf@immobilienscout24.de"),
            Author("Maximilien Riehl", "maximilien.riehl@immobilienscout24.de"))
