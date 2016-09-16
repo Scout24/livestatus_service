@@ -153,6 +153,10 @@ Columns: host_name notifications_enabled''', [["devica01", 1], ["tuvdbs05", 1], 
         self.assertRaises(NoColumnsSpecifiedException,
                           determine_columns_to_show_from_query, 'foobar')
 
+    def test_should_determine_columns_from_stats_query(self):
+        self.assertEquals(["avg perf_data"],
+                          determine_columns_to_show_from_query("GET services\nFilter: description ~ CPU\nFilter: host_name ~ somehost\nStats: avg perf_data"))
+
     def test_should_raise_exception_when_answer_is_missing_values(self):
         self.assertRaises(ValueError,
                           format_answer, 'GET hosts', [['host_name', 'notifications_enabled']], None)
