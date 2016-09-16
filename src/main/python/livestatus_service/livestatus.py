@@ -133,7 +133,7 @@ def format_answer(query, answer, key_to_use):
 
 
 def determine_columns_to_show_from_query(query):
-    columns_to_show=[]
+    columns_to_show = []
     for query_line in query.splitlines():
         if 'Columns:' in query_line:
             columns_to_show = query_line.split('Columns:')[1].split()
