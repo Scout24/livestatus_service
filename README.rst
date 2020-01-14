@@ -1,6 +1,9 @@
 livestatus-service
 ==================
 
+This project is DEPRECATED and not any longer supported
+=======================================================
+
 .. image:: https://coveralls.io/repos/ImmobilienScout24/livestatus_service/badge.png?branch=master
     :target: https://coveralls.io/r/ImmobilienScout24/livestatus_service?branch=master
     :alt: Coverage status
